@@ -6,7 +6,7 @@
 #    By: mhotting <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/03/11 16:01:35 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/11 14:12:16 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ ifndef NOFLAGS
 	CFLAGS				=	-Wall -Werror -Wextra
 endif
 HFLAGS					=	-I$(HEADERS_DIR)
+PHILOFLAGS				=	-pthread -g
 FSFLAGS					=	-fsanitize=address
 
 # HEADERS
