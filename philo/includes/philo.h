@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhotting <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/03/11 16:12:49 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:18:06 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <sys/time.h>
-# include <string.h>
-# include <pthread.h>
+
+// Time functions
+long	get_timestamp(struct timeval *time);
+long	get_current_timestamp(void);
+void	ft_usleep(long time);
+void	ft_msleep(size_t time);
 
 #endif
