@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:35:03 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/23 11:27:31 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:45:09 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ size_t	ft_strlen(const char *s)
 */
 void	print_error(char *str)
 {
-	printf(ANSI_COL_RED "Philo error: " ANSI_RESET "%s\n", str);
+	printf(COL_RED "Philo error: " COL_RESET "%s\n", str);
 }
