@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/23 11:00:42 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/24 11:40:40 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,9 @@ SRCS_FILES				=	philo.c					\
 							time_utils.c			\
 							t_philo_data_utils.c	\
 							args_validation.c		\
+							create_project_elts.c	\
+							philo_routine.c			\
+							print_protected.c		\
 							utils.c
 SRCS					=	$(addprefix $(SRCS_MAIN_DIR), $(SRCS_FILES))
 

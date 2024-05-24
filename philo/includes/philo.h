@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/23 16:54:19 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:37:06 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,23 @@
 
 # define ERR_MSG_USAGE	\
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
-# define ERR_MSG_PARAMS	"Args have to be positive numbers, lower than INTMAX"
+# define ERR_MSG_PARAMS	"Args have to be positive numbers, lower than INT_MAX"
 
 typedef struct s_philo_data	t_philo_data;
 typedef struct s_philo		t_philo;
+typedef struct s_fork		t_fork;
 
 struct s_philo_data
 {
-	size_t	nb_philos;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	size_t	nb_meals_req;
-	bool	nb_meals_limited;
-	t_philo	*philos;
+	size_t			nb_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	size_t			nb_meals_req;
+	bool			nb_meals_limited;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	mutex_print;
 };
 
 struct s_philo
@@ -60,7 +63,6 @@ struct s_philo
 	long			last_meal_start;
 	bool			is_dead;
 	bool			has_dead_friend;
-	bool			stop_routine;
 	long			time_to_eat;
 	long			time_to_sleep;
 };
@@ -83,6 +85,8 @@ bool			ft_msleep(size_t time);
 
 // Philo data functions
 bool			data_init(t_philo_data *data, int argc, char **argv);
+void			data_destroy(t_philo_data *data);
+bool			create_project_elts(t_philo_data *data);
 
 // Philo functions
 void			*philo_routine(void *philo_ptr);

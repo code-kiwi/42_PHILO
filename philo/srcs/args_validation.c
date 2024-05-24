@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:08:07 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/23 11:20:25 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:45:43 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	is_int_overflow(char *str)
 	if (ft_strlen(str) > 10)
 		return (false);
 	nb = ft_atoul(str);
-	if (nb > INT_MAX)
+	if (nb == 0 || nb > INT_MAX)
 		return (false);
 	return (true);
 }
