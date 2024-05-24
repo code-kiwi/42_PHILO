@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 11:37:06 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:05:19 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # define COL_RED	"\x1b[31m\x1b[1m"
 # define COL_GREEN	"\x1b[32m\x1b[1m"
-# define COL_YELLOW	"\x1b[33m\x1b[1m"
+# define COL_YELLOW	"\033[0;33m"
 # define COL_BLUE	"\x1b[34m\x1b[1m"
 # define COL_CYAN	"\x1b[36m\x1b[1m"
 # define COL_RESET	"\033[0m"
@@ -51,6 +51,7 @@ struct s_philo_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_print;
+	long			ts_initial;
 };
 
 struct s_philo
@@ -65,6 +66,7 @@ struct s_philo
 	bool			has_dead_friend;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			ts_initial;
 };
 
 enum e_philo_action_type
@@ -77,9 +79,9 @@ enum e_philo_action_type
 };
 
 // Time functions
-long			get_timestamp(struct timeval *time);
 long			get_current_timestamp(void);
 long			get_ts(void);
+long			philo_ts(t_philo *philo);
 bool			ft_usleep(long time);
 bool			ft_msleep(size_t time);
 
@@ -90,6 +92,7 @@ bool			create_project_elts(t_philo_data *data);
 
 // Philo functions
 void			*philo_routine(void *philo_ptr);
+void			launch_philos(t_philo_data *data);
 
 // Validation functions
 bool			validate_args(int argc, char **argv);
@@ -100,7 +103,7 @@ int				ft_isdigit(int c);
 int				ft_isspace(int c);
 size_t			ft_strlen(const char *s);
 void			print_error(char *str);
-bool			print_protected(pthread_mutex_t *mutex_print, long ts, \
+bool			pprint(pthread_mutex_t *mutex_print, long ts, \
 					size_t idx, enum e_philo_action_type action);
 
 #endif

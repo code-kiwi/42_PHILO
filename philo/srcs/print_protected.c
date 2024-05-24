@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_protected.c                                  :+:      :+:    :+:   */
+/*   pprint.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@
 
 #include "philo.h"
 
-bool	print_protected(
+bool	pprint(
 	pthread_mutex_t *mutex_print, long ts,
 	size_t idx, enum e_philo_action_type action
 )

@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 10:59:59 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:01:13 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ static bool	philo_routine_think(t_philo *philo)
 
 	if (
 		philo_has_to_stop(philo)
-		|| !print_protected(philo->mutex_print, get_ts(), philo->idx, ACT_THINK)
+		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_THINK)
 	)
 		return (false);
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		return (false);
-	ret = print_protected(philo->mutex_print, get_ts(), philo->idx, ACT_FORK);
+	ret = pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_FORK);
 	if (!ret || pthread_mutex_lock(philo->right_fork) != 0)
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		return (false);
 	}
-	if (!print_protected(philo->mutex_print, get_ts(), philo->idx, ACT_FORK))
+	if (!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_FORK))
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
@@ -54,7 +54,7 @@ static bool	philo_routine_eat(t_philo *philo)
 
 	if (
 		philo_has_to_stop(philo)
-		|| !print_protected(philo->mutex_print, get_ts(), philo->idx, ACT_EAT)
+		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_EAT)
 	)
 	{
 		pthread_mutex_unlock(philo->left_fork);
@@ -75,7 +75,7 @@ static bool	philo_routine_sleep(t_philo *philo)
 {
 	if (
 		philo_has_to_stop(philo)
-		|| !print_protected(philo->mutex_print, get_ts(), philo->idx, ACT_SLEEP)
+		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_SLEEP)
 		|| !ft_msleep(philo->time_to_sleep)
 	)
 		return (false);

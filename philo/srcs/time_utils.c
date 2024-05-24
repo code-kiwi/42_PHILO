@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/23 16:28:01 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:57:35 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-/**
- * @brief Returns a timestamp in microseconds, extracted from the given time
- * @param time Pointer to a timeval struct containing time info
- * @return The timestamp in microseconds, -1 in case of error
-*/
-long	get_timestamp(struct timeval *time)
-{
-	if (time == NULL)
-		return (-1);
-	return (time->tv_sec * 1000000 + time->tv_usec);
-}
+#include "philo.h"
 
 /**
  * @brief Returns the current timestamp in microseconds
@@ -38,7 +28,7 @@ long	get_current_timestamp(void)
 
 	if (gettimeofday(&curr_time, NULL) == -1)
 		return (-1);
-	return (get_timestamp(&curr_time));
+	return (curr_time.tv_sec * 1000000 + curr_time.tv_usec);
 }
 
 /**
@@ -53,6 +43,21 @@ long	get_ts(void)
 	if (utime == -1)
 		return (-1);
 	return (utime / 1000);
+}
+
+/**
+ * 
+*/
+long	philo_ts(t_philo *philo)
+{
+	long	ts;
+
+	if (philo == NULL)
+		return (-1);
+	ts = get_ts();
+	if (ts == -1)
+		return (-1);
+	return (ts - philo->ts_initial);
 }
 
 /**

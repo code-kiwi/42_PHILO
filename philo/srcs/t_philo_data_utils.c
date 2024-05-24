@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 11:26:13 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:50:00 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 		data->nb_meals_limited = false;
 	}
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
+		return (false);
+	data->ts_initial = get_ts();
+	if (data->ts_initial == -1)
 		return (false);
 	return (true);
 }
