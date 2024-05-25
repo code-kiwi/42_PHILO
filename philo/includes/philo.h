@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 13:05:19 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:27:24 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
 # define MSG_DIE	"died"
-# define LOG_MSG	"%ld %zu %s\n"
+# define LOG_MSG	"%8ld %3zu %s\n"
 
 # define ERR_MSG_USAGE	\
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
@@ -51,6 +51,7 @@ struct s_philo_data
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_print;
+	pthread_mutex_t	mutex_start;
 	long			ts_initial;
 };
 
@@ -61,12 +62,12 @@ struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
+	pthread_mutex_t	*mutex_start;
 	long			last_meal_start;
-	bool			is_dead;
-	bool			has_dead_friend;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			ts_initial;
+	bool			stopped;
 };
 
 enum e_philo_action_type
@@ -89,10 +90,11 @@ bool			ft_msleep(size_t time);
 bool			data_init(t_philo_data *data, int argc, char **argv);
 void			data_destroy(t_philo_data *data);
 bool			create_project_elts(t_philo_data *data);
+bool			data_join_threads(t_philo_data *data);
 
 // Philo functions
 void			*philo_routine(void *philo_ptr);
-void			launch_philos(t_philo_data *data);
+bool			launch_philos(t_philo_data *data);
 
 // Validation functions
 bool			validate_args(int argc, char **argv);

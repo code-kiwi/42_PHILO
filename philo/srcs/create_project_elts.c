@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 12:50:40 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:29:04 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
 	memset(philo, 0, sizeof(t_philo));
 	philo->idx = index + 1;
 	philo->last_meal_start = get_ts();
-	philo->is_dead = false;
-	philo->has_dead_friend = false;
+	philo->stopped = true;
 	philo->time_to_eat = data->time_to_eat;
 	philo->time_to_sleep = data->time_to_sleep;
 	philo->mutex_print = &data->mutex_print;
+	philo->mutex_start = &data->mutex_start;
 	philo->left_fork = &data->forks[index];
 	if (data->nb_philos == 1)
 		philo->right_fork = NULL;

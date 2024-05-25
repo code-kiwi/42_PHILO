@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 12:50:00 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:36:44 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,33 @@ void	data_destroy(t_philo_data *data)
 		data->forks = NULL;
 	}
 	pthread_mutex_destroy(&data->mutex_print);
+	pthread_mutex_destroy(&data->mutex_start);
 }
 
-/**
- * @brief Initializes the given philo data with the user input from argv
- * @param data a pointer to the t_philo_data structure to initialize
- * @param argc the number of arguments saved into argv
- * @param argv the arguments sent by the user
- * @return true if the initialization worked, else returns false
-*/
-bool	data_init(t_philo_data *data, int argc, char **argv)
+bool	data_join_threads(t_philo_data *data)
+{
+	size_t	i;
+	bool	ret;
+
+	if (data == NULL)
+		return (false);
+	ret = true;
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		if (pthread_join(data->philos[i].thread, NULL) != 0)
+			ret = false;
+		i++;
+	}
+	return (ret);
+}
+
+static bool	data_init_from_params(t_philo_data *data, int argc, char **argv)
 {
 	if (data == NULL || argc < 5 || argc > 6 || argv == NULL)
 		return (print_error(ERR_MSG_USAGE), false);
 	if (!validate_args(argc, argv))
 		return (print_error(ERR_MSG_PARAMS), false);
-	memset(data, 0, sizeof(t_philo_data));
 	data->nb_philos = ft_atoul(argv[1]);
 	data->time_to_die = ft_atoul(argv[2]);
 	data->time_to_eat = ft_atoul(argv[3]);
@@ -73,7 +84,26 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 		data->nb_meals_req = 0;
 		data->nb_meals_limited = false;
 	}
+	return (true);
+}
+
+/**
+ * @brief Initializes the given philo_data with the user input from argv
+ * @param data a pointer to the t_philo_data structure to initialize
+ * @param argc the number of arguments saved into argv
+ * @param argv the arguments sent by the user
+ * @return true if the initialization worked, else returns false
+*/
+bool	data_init(t_philo_data *data, int argc, char **argv)
+{
+	if (data == NULL)
+		return (print_error(ERR_MSG_USAGE), false);
+	memset(data, 0, sizeof(t_philo_data));	
+	if (!data_init_from_params(data, argc, argv))
+		return (false);
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&data->mutex_start, NULL) != 0)
 		return (false);
 	data->ts_initial = get_ts();
 	if (data->ts_initial == -1)

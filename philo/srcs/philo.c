@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:13 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 12:59:25 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:40:18 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv)
 	if (!create_project_elts(&data))
 		return (EXIT_FAILURE);
 	launch_philos(&data);
+	data_join_threads(&data);
 	data_destroy(&data);
 	return (0);
 }
