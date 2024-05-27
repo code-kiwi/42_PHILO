@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/25 13:29:35 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:32:17 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,37 @@ void	*philo_routine(void *philo_ptr)
 	if (philo_ptr == NULL)
 		return (NULL);
 	philo = (t_philo *) philo_ptr;
+	if (pthread_mutex_lock(philo->mutex_start) != 0)
+		return (NULL);
 	philo->stopped = false;
-	printf("PHILO: %zu\n", philo->idx);
-	pthread_mutex_lock(philo->mutex_start);
-	pthread_mutex_unlock(philo->mutex_start);
-	printf("PHILO: %zu\n", philo->idx);
+	if (pthread_mutex_unlock(philo->mutex_start) != 0)
+		return (NULL);
+	if (philo->idx % 2 == 0)
+		ft_msleep(philo->time_to_eat / 2);
+	else if (philo->nb_philos % 2 != 0 && philo->idx == philo->nb_philos)
+		ft_msleep(philo->time_to_eat);
 	while (true)
 	{
 		if (!philo_routine_forks(philo))
+		{
+			printf("STOPPED FORK\n");
 			break ;
+		}
 		if (!philo_routine_eat(philo))
+		{
+			printf("STOPPED FORK\n");
 			break ;
+		}
 		if (!philo_routine_sleep(philo))
+		{
+			printf("STOPPED FORK\n");
 			break ;
+		}
 		if (!philo_routine_think(philo))
+		{
+			printf("STOPPED FORK\n");
 			break ;
+		}
 	}
 	return (NULL);
 }

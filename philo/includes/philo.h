@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/25 13:27:24 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:44:28 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,23 @@
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
 # define MSG_DIE	"died"
-# define LOG_MSG	"%8ld %3zu %s\n"
+# define LOG_MSG	"%ld %zu %s\n"
 
 # define ERR_MSG_USAGE	\
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
 # define ERR_MSG_PARAMS	"Args have to be positive numbers, lower than INT_MAX"
 
-typedef struct s_philo_data	t_philo_data;
-typedef struct s_philo		t_philo;
-typedef struct s_fork		t_fork;
+typedef struct s_philo_order	t_philo_order;
+typedef struct s_philo_data		t_philo_data;
+typedef struct s_philo			t_philo;
+typedef struct s_fork			t_fork;
+
+struct s_philo_order
+{
+	size_t	*array;
+	size_t	i;
+	size_t	len;
+};
 
 struct s_philo_data
 {
@@ -58,16 +66,17 @@ struct s_philo_data
 struct s_philo
 {
 	size_t			idx;
+	size_t			nb_philos;
 	pthread_t		thread;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			ts_initial;
+	long			last_meal_start;
+	bool			stopped;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
 	pthread_mutex_t	*mutex_start;
-	long			last_meal_start;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			ts_initial;
-	bool			stopped;
 };
 
 enum e_philo_action_type

@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/24 13:01:37 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/27 12:56:59 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ifndef NOFLAGS
 endif
 HFLAGS					=	-I$(HEADERS_DIR)
 PHILOFLAGS				=	-pthread -g
-FSFLAGS					=	-fsanitize=address
+FSFLAGS					=	-fsanitize=thread
 
 # HEADERS
 HEADERS_DIR				=	includes/

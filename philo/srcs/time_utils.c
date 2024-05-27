@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 12:57:35 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:21:21 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <unistd.h>
 
 #include "philo.h"
+
+
+#include <stdio.h>
 
 /**
  * @brief Returns the current timestamp in microseconds
@@ -85,12 +88,11 @@ bool	ft_usleep(long time)
 		if (curr_ts == -1)
 			return (false);
 		elapsed = curr_ts - init_ts;
-		remaining = elapsed - time;
-		if (remaining > 1000)
-		{
-			if (usleep(remaining) == -1)
-				return (false);
-		}
+		remaining = time - elapsed;
+		if (remaining < 500)
+			break ;
+		if (usleep(remaining / 2) == -1)
+			return (false);
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/25 13:29:04 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:06:25 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,10 @@ static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
 	philo->left_fork = &data->forks[index];
 	if (data->nb_philos == 1)
 		philo->right_fork = NULL;
-	else if (index == data->nb_philos - 1)
-		philo->right_fork = &data->forks[0];
 	else
-		philo->right_fork = &data->forks[index + 1];
+		philo->right_fork = &data->forks[(index + 1) % data->nb_philos];
 	philo->ts_initial = data->ts_initial;
+	philo->nb_philos = data->nb_philos;
 }
 
 static bool	create_philos(t_philo_data *data)
