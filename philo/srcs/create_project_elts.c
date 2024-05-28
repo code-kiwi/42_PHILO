@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/27 13:06:25 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:12:30 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
 		return ;
 	memset(philo, 0, sizeof(t_philo));
 	philo->idx = index + 1;
-	philo->last_meal_start = get_ts();
-	philo->stopped = true;
+	philo->last_meal_start = 0;
+	philo->stopped = false;
+	philo->started = false;
 	philo->time_to_eat = data->time_to_eat;
 	philo->time_to_sleep = data->time_to_sleep;
 	philo->mutex_print = &data->mutex_print;
@@ -66,6 +67,10 @@ static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
 		philo->right_fork = &data->forks[(index + 1) % data->nb_philos];
 	philo->ts_initial = data->ts_initial;
 	philo->nb_philos = data->nb_philos;
+	philo->nb_philos_launched = &data->nb_philos_launched;
+	philo->nb_meals_req = data->nb_meals_req;
+	philo->nb_meals_had = 0;
+	philo->nb_meals_limited = data->nb_meals_limited;
 }
 
 static bool	create_philos(t_philo_data *data)

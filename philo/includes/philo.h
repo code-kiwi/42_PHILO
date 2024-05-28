@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/27 13:44:28 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:43:09 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ struct s_philo_order
 struct s_philo_data
 {
 	size_t			nb_philos;
+	size_t			nb_philos_launched;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
@@ -67,12 +68,17 @@ struct s_philo
 {
 	size_t			idx;
 	size_t			nb_philos;
+	size_t			*nb_philos_launched;
 	pthread_t		thread;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			ts_initial;
 	long			last_meal_start;
+	size_t			nb_meals_had;
+	size_t			nb_meals_req;
+	bool			nb_meals_limited;
 	bool			stopped;
+	bool			started;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
@@ -102,8 +108,12 @@ bool			create_project_elts(t_philo_data *data);
 bool			data_join_threads(t_philo_data *data);
 
 // Philo functions
-void			*philo_routine(void *philo_ptr);
 bool			launch_philos(t_philo_data *data);
+void			*philo_routine(void *philo_ptr);
+bool			philo_routine_forks(t_philo *philo);
+bool			philo_routine_think(t_philo *philo);
+bool			philo_routine_eat(t_philo *philo);
+bool			philo_routine_sleep(t_philo *philo);
 
 // Validation functions
 bool			validate_args(int argc, char **argv);

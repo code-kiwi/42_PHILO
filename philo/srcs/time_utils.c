@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/27 14:21:21 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:06:53 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include <unistd.h>
 
 #include "philo.h"
-
-
-#include <stdio.h>
 
 /**
  * @brief Returns the current timestamp in microseconds
@@ -49,7 +46,9 @@ long	get_ts(void)
 }
 
 /**
- * 
+ * @brief Returns the current timestamp of a philo, based on its initial ts
+ * @param philo the philo whose current timestamp is expected
+ * @return the timestamp as a long number
 */
 long	philo_ts(t_philo *philo)
 {

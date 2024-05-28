@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/27 12:59:22 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:44:52 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	data_join_threads(t_philo_data *data)
 		return (false);
 	ret = true;
 	i = 0;
-	while (i < data->nb_philos)
+	while (i < data->nb_philos_launched)
 	{
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
 			ret = false;
@@ -98,7 +98,7 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 {
 	if (data == NULL)
 		return (print_error(ERR_MSG_USAGE), false);
-	memset(data, 0, sizeof(t_philo_data));	
+	memset(data, 0, sizeof(t_philo_data));
 	if (!data_init_from_params(data, argc, argv))
 		return (false);
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
