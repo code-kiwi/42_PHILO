@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 23:43:09 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:54:25 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
 # define MSG_DIE	"died"
-# define LOG_MSG	"%ld %zu %s\n"
+# define LOG_MSG	"%8ld %4zu %s\n"
 
 # define ERR_MSG_USAGE	\
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
