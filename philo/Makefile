@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/28 22:04:23 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/30 16:06:32 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS_FILES				=	philo.c					\
 							philo_routine.c			\
 							philo_subroutines.c		\
 							print_protected.c		\
-							launch_philos.c			\
+							launch_threads.c		\
+							monitoring_utils.c		\
 							utils.c
 SRCS					=	$(addprefix $(SRCS_MAIN_DIR), $(SRCS_FILES))
 

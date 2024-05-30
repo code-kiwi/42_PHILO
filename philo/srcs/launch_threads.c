@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_philos.c                                    :+:      :+:    :+:   */
+/*   launch_threads.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:38:24 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 22:52:27 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:53:50 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,26 @@
 
 #include "philo.h"
 
-bool	launch_philos(t_philo_data *data)
+static bool	launch_monitoring(t_philo_data *data)
+{
+	t_monitor	*monitor;
+	int			returned;
+
+	if (data == NULL)
+		return (false);
+	monitor = &data->monitor;
+	if (pthread_mutex_lock(&monitor->mutex) != 0)
+		return (false);
+	returned = pthread_create(&monitor->thread, NULL, monitor_routine, monitor);
+	if (pthread_mutex_unlock(&monitor->mutex) != 0 || returned != 0)
+		return (false);
+	return (true);
+}
+
+bool	launch_threads(t_philo_data *data)
 {
 	size_t	i;
+	bool	returned;
 
 	if (data == NULL)
 		return (false);
@@ -32,8 +49,9 @@ bool	launch_philos(t_philo_data *data)
 		data->nb_philos_launched += 1;
 		i++;
 	}
-	if (data->nb_philos_launched != data->nb_philos
-		|| pthread_mutex_unlock(&data->mutex_start) != 0)
+	returned = launch_monitoring(data);
+	if (pthread_mutex_unlock(&data->mutex_start) != 0 || !returned
+		|| data->nb_philos_launched != data->nb_philos)
 		return (false);
 	return (true);
 }

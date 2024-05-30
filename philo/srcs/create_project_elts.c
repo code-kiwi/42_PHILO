@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 23:12:30 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:29:52 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
 	philo->nb_meals_req = data->nb_meals_req;
 	philo->nb_meals_had = 0;
 	philo->nb_meals_limited = data->nb_meals_limited;
+	philo->monitor = &data->monitor;
 }
 
 static bool	create_philos(t_philo_data *data)

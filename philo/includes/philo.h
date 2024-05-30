@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 23:54:25 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:06:05 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
 # define ERR_MSG_PARAMS	"Args have to be positive numbers, lower than INT_MAX"
 
-typedef struct s_philo_order	t_philo_order;
 typedef struct s_philo_data		t_philo_data;
 typedef struct s_philo			t_philo;
 typedef struct s_fork			t_fork;
+typedef struct s_monitor		t_monitor;
 
-struct s_philo_order
+struct s_monitor
 {
-	size_t	*array;
-	size_t	i;
-	size_t	len;
+	pthread_t		thread;
+	bool			started;
+	pthread_mutex_t	mutex;
 };
 
 struct s_philo_data
@@ -62,6 +62,7 @@ struct s_philo_data
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_start;
 	long			ts_initial;
+	t_monitor		monitor;
 };
 
 struct s_philo
@@ -83,6 +84,7 @@ struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
 	pthread_mutex_t	*mutex_start;
+	t_monitor		*monitor;
 };
 
 enum e_philo_action_type
@@ -108,7 +110,7 @@ bool			create_project_elts(t_philo_data *data);
 bool			data_join_threads(t_philo_data *data);
 
 // Philo functions
-bool			launch_philos(t_philo_data *data);
+bool			launch_threads(t_philo_data *data);
 void			*philo_routine(void *philo_ptr);
 bool			philo_routine_forks(t_philo *philo);
 bool			philo_routine_think(t_philo *philo);
@@ -117,6 +119,11 @@ bool			philo_routine_sleep(t_philo *philo);
 
 // Validation functions
 bool			validate_args(int argc, char **argv);
+
+// Monitor functions
+bool			t_monitor_init(t_monitor *monitor);
+bool			is_monitoring_on(t_monitor *monitor);
+void			*monitor_routine(void *monitor_ptr);
 
 // Utils functions
 unsigned long	ft_atoul(const char *nb_ptr);

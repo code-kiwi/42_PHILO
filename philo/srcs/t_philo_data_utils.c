@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 22:44:52 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:45:46 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,16 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
 		return (false);
 	if (pthread_mutex_init(&data->mutex_start, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->mutex_print);
 		return (false);
+	}
 	data->ts_initial = get_ts();
-	if (data->ts_initial == -1)
+	if (data->ts_initial == -1 || !t_monitor_init(&data->monitor))
+	{
+		pthread_mutex_destroy(&data->mutex_print);
+		pthread_mutex_destroy(&data->mutex_start);
 		return (false);
+	}
 	return (true);
 }
