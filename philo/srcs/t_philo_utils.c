@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:19:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 14:03:40 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:30:13 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ bool	philo_set_last_meal_start(t_philo *philo)
 	if (pthread_mutex_unlock(&philo->mutex_meal_start) != 0)
 		return (false);
 	return (ret);
+}
+
+long	philo_get_last_meal_start(t_philo *philo)
+{
+	long	ts;
+
+	if (philo == NULL)
+		return (false);
+	if (pthread_mutex_lock(&philo->mutex_meal_start) != 0)
+		return (-1);
+	ts = philo->last_meal_start;
+	if (pthread_mutex_unlock(&philo->mutex_meal_start) != 0)
+		return (-1);
+	return (ts);
 }

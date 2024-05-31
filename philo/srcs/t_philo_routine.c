@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 13:47:15 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:55:40 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ static bool	philo_routine_init(t_philo *philo)
 		philo->stopped = true;
 	if (pthread_mutex_unlock(philo->mutex_start) != 0)
 		return (false);
-	philo->last_meal_start = get_ts();
-	if (philo->stopped || philo->last_meal_start == -1)
-	{
-		philo->stopped = true;
-		return (false);
-	}
-	if (philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
+	if (
+		philo->stopped || !philo_set_last_meal_start(philo)
+		|| (philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
+	)
 	{
 		philo->stopped = true;
 		return (false);

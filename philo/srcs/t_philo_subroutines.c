@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_subroutines.c                                :+:      :+:    :+:   */
+/*   t_philo_subroutines.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/28 23:44:35 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:32:55 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ bool	philo_routine_eat(t_philo *philo)
 		return (false);
 	}
 	ret = true;
-	philo->last_meal_start = get_ts();
-	if (philo->last_meal_start == -1)
+	if (!philo_set_last_meal_start(philo))
 		ret = false;
 	ret = ft_msleep(philo->time_to_eat) && ret;
 	ret = (pthread_mutex_unlock(philo->left_fork) == 0) && ret;

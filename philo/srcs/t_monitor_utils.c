@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 14:09:55 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:14:47 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool	t_monitor_init(t_monitor *monitor, t_philo_data *data)
 	monitor->error = false;
 	monitor->nb_philos = data->nb_philos;
 	monitor->nb_philos_launched = &data->nb_philos_launched;
+	monitor->philos = &data->philos;
 	monitor->mutex_start = &data->mutex_start;
 	monitor->mutex_print = &data->mutex_print;
 	if (pthread_mutex_init(&monitor->mutex_monitor_start, NULL) != 0)
@@ -43,7 +44,7 @@ bool	t_monitoring_is_on(t_monitor *monitor)
 {
 	if (monitor == NULL)
 		return (false);
-	return (get_mutex_protected_bool(&monitor->mutex_monitor_start, \
+	return (get_mutex_bool(&monitor->mutex_monitor_start, \
 		&monitor->started));
 }
 
@@ -63,5 +64,5 @@ bool	t_monitoring_is_on_error(t_monitor *monitor)
 {
 	if (monitor == NULL)
 		return (false);
-	return (get_mutex_protected_bool(&monitor->mutex_error, &monitor->error));
+	return (get_mutex_bool(&monitor->mutex_error, &monitor->error));
 }

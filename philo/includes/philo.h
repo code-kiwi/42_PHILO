@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 14:05:13 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:14:15 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
 # define MSG_DIE	"died"
-# define LOG_MSG	"%8ld %4zu %s\n"
+// # define LOG_MSG	"%8ld %4zu %s\n"
+# define LOG_MSG	"%ld %zu %s\n"
 
 # define ERR_MSG_USAGE	\
 	"Usage: philo nb_philos time_to_die time_to_eat time_to_sleep [nb_meals]"
@@ -49,6 +50,7 @@ struct s_monitor
 	bool			error;
 	size_t			nb_philos;
 	size_t			*nb_philos_launched;
+	t_philo			**philos;
 	pthread_mutex_t	mutex_monitor_start;
 	pthread_mutex_t	mutex_error;
 	pthread_mutex_t	*mutex_start;
@@ -126,6 +128,8 @@ bool			philo_routine_eat(t_philo *philo);
 bool			philo_routine_sleep(t_philo *philo);
 bool			t_philo_init(t_philo *philo, t_philo_data *data, size_t index);
 void			t_philo_destroy(t_philo *philo);
+bool			philo_set_last_meal_start(t_philo *philo);
+long			philo_get_last_meal_start(t_philo *philo);
 
 // Validation functions
 bool			validate_args(int argc, char **argv);
@@ -145,6 +149,8 @@ size_t			ft_strlen(const char *s);
 void			print_error(char *str);
 bool			pprint(pthread_mutex_t *mutex_print, long ts, \
 					size_t idx, enum e_philo_action_type action);
-bool			get_mutex_protected_bool(pthread_mutex_t *mutex, bool *var_add);
+bool			get_mutex_bool(pthread_mutex_t *mutex, bool *var_add);
+bool			set_mutex_bool(pthread_mutex_t *mutex, \
+					bool *var_addr, bool val);
 
 #endif
