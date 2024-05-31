@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 16:25:43 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:42:35 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 #include <pthread.h>
 #include <errno.h>
 
-
-#include <stdio.h>
-
 #include "philo.h"
 
 static bool	philo_routine_wait_monitor(t_philo *philo)
 {
-	// TODO: if monitoring encountered an error?
 	if (philo == NULL || philo->monitor == NULL)
 		return (false);
 	while (!is_monitoring_on(philo->monitor))
@@ -30,11 +26,12 @@ static bool	philo_routine_wait_monitor(t_philo *philo)
 		if (errno != 0 || !ft_usleep(500))
 		{
 			philo->stopped = true;
-			return (false);	
+			return (false);
 		}
 	}
 	return (true);
 }
+
 static bool	philo_routine_init(t_philo *philo)
 {
 	if (philo == NULL || pthread_mutex_lock(philo->mutex_start) != 0)

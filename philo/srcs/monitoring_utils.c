@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 16:46:27 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:41:34 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	t_monitor_init(t_monitor *monitor)
 {
 	if (monitor == NULL)
 		return (false);
+	monitor->thread_created = false;
 	monitor->started = false;
 	if (pthread_mutex_init(&monitor->mutex, NULL) != 0)
 		return (false);
@@ -55,26 +56,11 @@ static bool	t_monitor_start(t_monitor *monitor)
 void	*monitor_routine(void *monitor_ptr)
 {
 	t_monitor	*monitor;
-	// bool		stopped_philo;
-	// size_t		i;
 
 	if (monitor_ptr == NULL)
 		return (NULL);
 	monitor = (t_monitor *) monitor_ptr;
 	if (!t_monitor_start(monitor))
 		return (NULL);
-	// philos = monitor->philos;
-	// if (philos == NULL)
-	// 	return (NULL);
-	// stopped_philo = false;
-	// while (!stopped_philo)
-	// {
-	// 	i = 0;
-	// 	while (i < monitor->nb_philos)
-	// 	{
-	// 		if ()
-	// 		i++;
-	// 	}
-	// }
 	return (NULL);
 }

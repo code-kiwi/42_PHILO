@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 16:45:46 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:43:32 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	data_destroy(t_philo_data *data)
 		return ;
 	if (data->philos != NULL)
 	{
+		i = 0;
+		while (i < data->nb_philos)
+			t_philo_destroy(&data->philos[i++]);
 		free(data->philos);
 		data->philos = NULL;
 	}
@@ -35,10 +38,7 @@ void	data_destroy(t_philo_data *data)
 	{
 		i = 0;
 		while (i < data->nb_philos)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			i++;
-		}
+			pthread_mutex_destroy(&data->forks[i++]);
 		free(data->forks);
 		data->forks = NULL;
 	}
@@ -61,6 +61,11 @@ bool	data_join_threads(t_philo_data *data)
 			ret = false;
 		i++;
 	}
+	if (
+		data->monitor.thread_created
+		&& pthread_join(data->monitor.thread, NULL) != 0
+	)
+		ret = false;
 	return (ret);
 }
 

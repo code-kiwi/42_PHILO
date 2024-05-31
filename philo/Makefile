@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/30 16:06:32 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/31 11:43:57 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ HEADERS					=	$(addprefix $(HEADERS_DIR), $(HEADERS_FILES))
 SRCS_MAIN_DIR			=	srcs/
 SRCS_FILES				=	philo.c					\
 							time_utils.c			\
+							t_philo_utils.c			\
 							t_philo_data_utils.c	\
 							args_validation.c		\
 							create_project_elts.c	\

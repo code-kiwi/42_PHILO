@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_threads.c                                    :+:      :+:    :+:   */
+/*   launch_threads.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 12:38:24 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 12:53:50 by mhotting         ###   ########.fr       */
+/*   Created: 2024/05/31 09:41:22 by mhotting          #+#    #+#             */
+/*   Updated: 2024/05/31 09:41:24 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static bool	launch_monitoring(t_philo_data *data)
 	returned = pthread_create(&monitor->thread, NULL, monitor_routine, monitor);
 	if (pthread_mutex_unlock(&monitor->mutex) != 0 || returned != 0)
 		return (false);
+	monitor->thread_created = true;
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 14:29:52 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:38:05 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,6 @@ static bool	create_forks(t_philo_data *data)
 	return (false);
 }
 
-/**
- * @todo check if timestamp init is not leading to troubles
-*/
-static void	init_philo(t_philo *philo, t_philo_data *data, size_t index)
-{
-	if (philo == NULL || data == NULL)
-		return ;
-	memset(philo, 0, sizeof(t_philo));
-	philo->idx = index + 1;
-	philo->last_meal_start = 0;
-	philo->stopped = false;
-	philo->started = false;
-	philo->time_to_eat = data->time_to_eat;
-	philo->time_to_sleep = data->time_to_sleep;
-	philo->mutex_print = &data->mutex_print;
-	philo->mutex_start = &data->mutex_start;
-	philo->left_fork = &data->forks[index];
-	if (data->nb_philos == 1)
-		philo->right_fork = NULL;
-	else
-		philo->right_fork = &data->forks[(index + 1) % data->nb_philos];
-	philo->ts_initial = data->ts_initial;
-	philo->nb_philos = data->nb_philos;
-	philo->nb_philos_launched = &data->nb_philos_launched;
-	philo->nb_meals_req = data->nb_meals_req;
-	philo->nb_meals_had = 0;
-	philo->nb_meals_limited = data->nb_meals_limited;
-	philo->monitor = &data->monitor;
-}
-
 static bool	create_philos(t_philo_data *data)
 {
 	size_t	i;
@@ -86,7 +56,7 @@ static bool	create_philos(t_philo_data *data)
 	i = 0;
 	while (i < data->nb_philos)
 	{
-		init_philo(&data->philos[i], data, i);
+		t_philo_init(&data->philos[i], data, i);
 		i++;
 	}
 	return (true);
