@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 11:38:05 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:15:06 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,20 @@ static bool	create_philos(t_philo_data *data)
 	i = 0;
 	while (i < data->nb_philos)
 	{
-		t_philo_init(&data->philos[i], data, i);
+		if (!t_philo_init(&data->philos[i], data, i))
+			break ;
 		i++;
 	}
-	return (true);
+	if (i == data->nb_philos)
+		return (true);
+	while (i > 0)
+	{
+		t_philo_destroy(&data->philos[i - 1]);
+		i--;
+	}
+	free(data->philos);
+	data->philos = NULL;
+	return (false);
 }
 
 bool	create_project_elts(t_philo_data *data)

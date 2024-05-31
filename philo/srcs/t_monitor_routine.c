@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitoring_utils.c                                 :+:      :+:    :+:   */
+/*   t_monitor_routine.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 09:41:34 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:19:21 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,51 +16,35 @@
 
 #include "philo.h"
 
-bool	t_monitor_init(t_monitor *monitor)
+static bool	t_monitor_routine_start(t_monitor *monitor)
 {
-	if (monitor == NULL)
-		return (false);
-	monitor->thread_created = false;
-	monitor->started = false;
-	if (pthread_mutex_init(&monitor->mutex, NULL) != 0)
-		return (false);
-	return (true);
-}
+	bool	error;
 
-bool	is_monitoring_on(t_monitor *monitor)
-{
-	bool	ret;
-
-	if (monitor == NULL)
+	error = false;
+	if (monitor == NULL || pthread_mutex_lock(monitor->mutex_start) != 0)
 		return (false);
-	if (pthread_mutex_lock(&monitor->mutex) != 0)
+	if (*(monitor->nb_philos_launched) != monitor->nb_philos)
+		error = true;
+	if (pthread_mutex_unlock(monitor->mutex_start) != 0)
 		return (false);
-	ret = monitor->started;
-	if (pthread_mutex_unlock(&monitor->mutex) != 0)
+	if (error)
 		return (false);
-	return (ret);
-}
-
-static bool	t_monitor_start(t_monitor *monitor)
-{
-	if (monitor == NULL)
-		return (false);
-	if (pthread_mutex_lock(&monitor->mutex) != 0)
+	if (pthread_mutex_lock(&monitor->mutex_monitor_start) != 0)
 		return (false);
 	monitor->started = true;
-	if (pthread_mutex_unlock(&monitor->mutex) != 0)
+	if (pthread_mutex_unlock(&monitor->mutex_monitor_start) != 0)
 		return (false);
 	return (true);
 }
 
-void	*monitor_routine(void *monitor_ptr)
+void	*t_monitor_routine(void *monitor_ptr)
 {
 	t_monitor	*monitor;
 
 	if (monitor_ptr == NULL)
 		return (NULL);
 	monitor = (t_monitor *) monitor_ptr;
-	if (!t_monitor_start(monitor))
-		return (NULL);
+	if (!t_monitor_routine_start(monitor))
+		return (t_monitoring_set_error(monitor), NULL);
 	return (NULL);
 }

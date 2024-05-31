@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:19:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 11:53:49 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:03:40 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	t_philo_destroy(t_philo *philo)
 		return ;
 	pthread_mutex_destroy(&philo->mutex_meal_start);
 	pthread_mutex_destroy(&philo->mutex_stop);
-	
 }
 
 static bool	t_philo_init_mutex(t_philo *philo)

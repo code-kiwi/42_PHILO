@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   t_philo_routine.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 09:42:35 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:47:15 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	philo_routine_wait_monitor(t_philo *philo)
 {
 	if (philo == NULL || philo->monitor == NULL)
 		return (false);
-	while (!is_monitoring_on(philo->monitor))
+	while (!t_monitoring_is_on(philo->monitor))
 	{
 		if (errno != 0 || !ft_usleep(500))
 		{
@@ -46,7 +46,6 @@ static bool	philo_routine_init(t_philo *philo)
 		philo->stopped = true;
 		return (false);
 	}
-	philo->started = true;
 	if (philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
 	{
 		philo->stopped = true;

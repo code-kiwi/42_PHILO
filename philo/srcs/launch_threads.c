@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 09:41:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 09:41:24 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:42:05 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@
 static bool	launch_monitoring(t_philo_data *data)
 {
 	t_monitor	*monitor;
-	int			returned;
 
 	if (data == NULL)
 		return (false);
 	monitor = &data->monitor;
-	if (pthread_mutex_lock(&monitor->mutex) != 0)
-		return (false);
-	returned = pthread_create(&monitor->thread, NULL, monitor_routine, monitor);
-	if (pthread_mutex_unlock(&monitor->mutex) != 0 || returned != 0)
+	if (pthread_create(&monitor->thread, NULL, t_monitor_routine, monitor) != 0)
 		return (false);
 	monitor->thread_created = true;
 	return (true);

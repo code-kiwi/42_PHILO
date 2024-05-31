@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 11:47:11 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:05:13 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ struct s_monitor
 	pthread_t		thread;
 	bool			thread_created;
 	bool			started;
-	pthread_mutex_t	mutex;
+	bool			error;
+	size_t			nb_philos;
+	size_t			*nb_philos_launched;
+	pthread_mutex_t	mutex_monitor_start;
+	pthread_mutex_t	mutex_error;
+	pthread_mutex_t	*mutex_start;
+	pthread_mutex_t	*mutex_print;
 };
 
 struct s_philo_data
@@ -79,7 +85,6 @@ struct s_philo
 	size_t			nb_meals_req;
 	bool			nb_meals_limited;
 	bool			stopped;
-	bool			started;
 	pthread_t		thread;
 	pthread_mutex_t	mutex_meal_start;
 	pthread_mutex_t	mutex_stop;
@@ -126,9 +131,11 @@ void			t_philo_destroy(t_philo *philo);
 bool			validate_args(int argc, char **argv);
 
 // Monitor functions
-bool			t_monitor_init(t_monitor *monitor);
-bool			is_monitoring_on(t_monitor *monitor);
-void			*monitor_routine(void *monitor_ptr);
+bool			t_monitor_init(t_monitor *monitor, t_philo_data *data);
+bool			t_monitoring_is_on(t_monitor *monitor);
+void			*t_monitor_routine(void *monitor_ptr);
+bool			t_monitoring_set_error(t_monitor *monitor);
+bool			t_monitoring_is_on_error(t_monitor *monitor);
 
 // Utils functions
 unsigned long	ft_atoul(const char *nb_ptr);
@@ -138,5 +145,6 @@ size_t			ft_strlen(const char *s);
 void			print_error(char *str);
 bool			pprint(pthread_mutex_t *mutex_print, long ts, \
 					size_t idx, enum e_philo_action_type action);
+bool			get_mutex_protected_bool(pthread_mutex_t *mutex, bool *var_add);
 
 #endif

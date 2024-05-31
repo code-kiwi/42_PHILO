@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/31 11:43:57 by mhotting         ###   ########.fr        #
+#    Updated: 2024/05/31 13:58:01 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,20 @@ HEADERS					=	$(addprefix $(HEADERS_DIR), $(HEADERS_FILES))
 
 # SOURCES GENERAL
 SRCS_MAIN_DIR			=	srcs/
-SRCS_FILES				=	philo.c					\
-							time_utils.c			\
-							t_philo_utils.c			\
-							t_philo_data_utils.c	\
-							args_validation.c		\
+SRCS_FILES				=	args_validation.c		\
 							create_project_elts.c	\
-							philo_routine.c			\
-							philo_subroutines.c		\
-							print_protected.c		\
 							launch_threads.c		\
-							monitoring_utils.c		\
-							utils.c
+							philo.c					\
+							print_protected.c		\
+							t_monitor_utils.c		\
+							t_monitor_routine.c		\
+							t_philo_data_utils.c	\
+							t_philo_routine.c		\
+							t_philo_subroutines.c	\
+							t_philo_utils.c			\
+							time_utils.c			\
+							utils1.c				\
+							utils2.c
 SRCS					=	$(addprefix $(SRCS_MAIN_DIR), $(SRCS_FILES))
 
 # OBJECTS GENERAL
