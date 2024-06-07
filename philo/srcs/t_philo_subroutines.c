@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 15:32:55 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:03:24 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ bool	philo_routine_think(t_philo *philo)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_THINK)
 	)
 		return (false);
+	if (philo->nb_philos % 2 == 1 && philo->time_to_eat >= philo->time_to_sleep)
+	{
+		if (!ft_msleep(philo->time_to_eat))
+			return (false);
+	}
 	return (true);
 }
 
