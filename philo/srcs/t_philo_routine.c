@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 11:16:47 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:04:25 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	philo_routine_wait_monitor(t_philo *philo)
 	{
 		if (errno != 0 || !ft_usleep(500))
 		{
-			philo->stopped = true;
+			set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
 			return (false);
 		}
 	}
@@ -37,16 +37,23 @@ static bool	philo_routine_init(t_philo *philo)
 	if (philo == NULL || pthread_mutex_lock(philo->mutex_start) != 0)
 		return (false);
 	if (*(philo->nb_philos_launched) != philo->nb_philos)
-		philo->stopped = true;
+		set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
 	if (pthread_mutex_unlock(philo->mutex_start) != 0)
 		return (false);
+	if (!philo_set_last_meal_start(philo))
+	{
+		set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
+		return (false);
+	}
 	if (
-		philo->stopped || !philo_set_last_meal_start(philo)
+		get_mutex_bool(&philo->mutex_stop, &philo->stopped)
 		|| (philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
-		|| (philo->idx == philo->nb_philos && !ft_msleep(philo->time_to_eat))
+		|| (philo->nb_philos % 2 != 0 && philo->idx == philo->nb_philos
+			&& !ft_msleep(philo->time_to_eat))
+		|| !philo_set_last_meal_start(philo)
 	)
 	{
-		philo->stopped = true;
+		set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
 		return (false);
 	}
 	return (true);
@@ -75,6 +82,6 @@ void	*philo_routine(void *philo_ptr)
 		if (!philo_routine_think(philo))
 			break ;
 	}
-	philo->stopped = true;
+	set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
 	return (NULL);
 }

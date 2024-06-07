@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 11:03:24 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:38:23 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ bool	philo_routine_forks(t_philo *philo)
 	if (philo == NULL)
 		return (false);
 	philo_routine_forks_init(philo, &first_fork, &second_fork);
-	if (philo->stopped || pthread_mutex_lock(first_fork) != 0)
+	if (get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		|| pthread_mutex_lock(first_fork) != 0)
 		return (false);
 	if (
 		!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_FORK)
-		|| philo->stopped || pthread_mutex_lock(second_fork) != 0
+		|| get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		|| pthread_mutex_lock(second_fork) != 0
 	)
 	{
 		pthread_mutex_unlock(first_fork);
@@ -62,7 +64,7 @@ bool	philo_routine_forks(t_philo *philo)
 bool	philo_routine_think(t_philo *philo)
 {
 	if (
-		philo == NULL || philo->stopped
+		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_THINK)
 	)
 		return (false);
@@ -79,7 +81,7 @@ bool	philo_routine_eat(t_philo *philo)
 	bool	ret;
 
 	if (
-		philo == NULL || philo->stopped
+		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_EAT)
 	)
 	{
@@ -100,7 +102,7 @@ bool	philo_routine_eat(t_philo *philo)
 bool	philo_routine_sleep(t_philo *philo)
 {
 	if (
-		philo == NULL || philo->stopped
+		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_SLEEP)
 		|| !ft_msleep(philo->time_to_sleep)
 	)

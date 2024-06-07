@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 16:14:15 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:49:28 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ struct s_monitor
 	bool			thread_created;
 	bool			started;
 	bool			error;
+	long			time_to_die;
 	size_t			nb_philos;
 	size_t			*nb_philos_launched;
-	t_philo			**philos;
+	t_philo			*philos;
 	pthread_mutex_t	mutex_monitor_start;
 	pthread_mutex_t	mutex_error;
 	pthread_mutex_t	*mutex_start;

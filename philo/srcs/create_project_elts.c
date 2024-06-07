@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 14:15:06 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:45:34 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ bool	create_project_elts(t_philo_data *data)
 {
 	if (data == NULL)
 		return (false);
-	if (!create_forks(data))
-		return (data_destroy(data), false);
-	if (!create_philos(data))
+	if (
+		!create_forks(data)
+		|| !create_philos(data)
+		|| !t_monitor_init(&data->monitor, data)
+	)
 		return (data_destroy(data), false);
 	return (true);
 }

@@ -6,13 +6,14 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 15:51:53 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:03:30 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <errno.h>
 
 #include "philo.h"
 
@@ -34,6 +35,57 @@ static bool	t_monitor_routine_start(t_monitor *monitor)
 	return (true);
 }
 
+static void	t_monitor_stop_philos(t_monitor *monitor)
+{
+	size_t	i;
+	t_philo	*philo;
+
+	if (monitor == NULL || monitor->philos == NULL)
+		return ;
+	i = 0;
+	while (i < monitor->nb_philos)
+	{
+		philo = monitor->philos + i;
+		set_mutex_bool(&philo->mutex_stop, &philo->stopped, true);
+		i++;
+	}
+}
+
+static bool	t_monitor_routine_loop_death(t_philo *philo)
+{
+	if (!set_mutex_bool(&philo->mutex_stop, &philo->stopped, true))
+		return (false);
+	if (!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_DIE))
+		return (false);
+	return (true);
+}
+
+static bool	t_monitor_routine_loop(t_monitor *monitor)
+{
+	size_t	i;
+	t_philo	*philo;
+	long	ts_meal;
+	long	ts_curr;
+
+	while (true)
+	{
+		i = 0;
+		while (i < monitor->nb_philos)
+		{
+			philo = &monitor->philos[i];
+			if (get_mutex_bool(&philo->mutex_stop, &philo->stopped))
+				return (true);
+			ts_meal = philo_get_last_meal_start(philo);
+			ts_curr = get_ts();
+			if (errno != 0 || ts_meal == -1 || ts_curr == -1)
+				return (false);
+			if (ts_meal != 0 && ts_curr - ts_meal >= monitor->time_to_die)
+				return (t_monitor_routine_loop_death(philo));
+			i++;
+		}
+	}
+}
+
 void	*t_monitor_routine(void *monitor_ptr)
 {
 	t_monitor	*monitor;
@@ -43,5 +95,7 @@ void	*t_monitor_routine(void *monitor_ptr)
 	monitor = (t_monitor *) monitor_ptr;
 	if (!t_monitor_routine_start(monitor))
 		return (t_monitoring_set_error(monitor), NULL);
+	t_monitor_routine_loop(monitor);
+	t_monitor_stop_philos(monitor);
 	return (NULL);
 }
