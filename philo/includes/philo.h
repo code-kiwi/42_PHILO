@@ -67,6 +67,7 @@ struct s_philo_data
 	long			time_to_sleep;
 	size_t			nb_meals_req;
 	bool			nb_meals_limited;
+	bool			stopped;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_print;
@@ -89,7 +90,7 @@ struct s_philo
 	size_t			nb_meals_had;
 	size_t			nb_meals_req;
 	bool			nb_meals_limited;
-	bool			stopped;
+	bool			*stopped;
 	pthread_t		thread;
 	pthread_mutex_t	*mutex_meal_start;
 	pthread_mutex_t	*mutex_stop;

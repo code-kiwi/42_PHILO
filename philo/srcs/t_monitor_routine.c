@@ -35,25 +35,9 @@ static bool	t_monitor_routine_start(t_monitor *monitor)
 	return (true);
 }
 
-static void	t_monitor_stop_philos(t_monitor *monitor)
-{
-	size_t	i;
-	t_philo	*philo;
-
-	if (monitor == NULL || monitor->philos == NULL)
-		return ;
-	i = 0;
-	while (i < monitor->nb_philos)
-	{
-		philo = monitor->philos + i;
-		set_mutex_bool(philo->mutex_stop, &philo->stopped, true);
-		i++;
-	}
-}
-
 static bool	t_monitor_routine_loop_death(t_philo *philo)
 {
-	if (!set_mutex_bool(philo->mutex_stop, &philo->stopped, true))
+	if (!set_mutex_bool(philo->mutex_stop, philo->stopped, true))
 		return (false);
 	if (!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_DIE))
 		return (false);
@@ -73,7 +57,7 @@ static bool	t_monitor_routine_loop(t_monitor *monitor)
 		while (i < monitor->nb_philos)
 		{
 			philo = &monitor->philos[i];
-			if (get_mutex_bool(philo->mutex_stop, &philo->stopped))
+			if (get_mutex_bool(philo->mutex_stop, philo->stopped))
 				return (true);
 			ts_meal = philo_get_last_meal_start(philo);
 			ts_curr = get_ts();
@@ -96,6 +80,5 @@ void	*t_monitor_routine(void *monitor_ptr)
 	if (!t_monitor_routine_start(monitor))
 		return (t_monitoring_set_error(monitor), NULL);
 	t_monitor_routine_loop(monitor);
-	t_monitor_stop_philos(monitor);
 	return (NULL);
 }

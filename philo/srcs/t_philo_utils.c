@@ -37,6 +37,7 @@ bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 	philo->nb_meals_req = data->nb_meals_req;
 	philo->nb_meals_limited = data->nb_meals_limited;
 	philo->monitor = &data->monitor;
+	philo->stopped = &data->stopped;
 	return (true);
 }
 
