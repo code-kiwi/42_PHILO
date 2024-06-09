@@ -28,9 +28,6 @@ void	data_destroy(t_philo_data *data)
 		return ;
 	if (data->philos != NULL)
 	{
-		i = 0;
-		while (i < data->nb_philos)
-			t_philo_destroy(&data->philos[i++]);
 		free(data->philos);
 		data->philos = NULL;
 	}
@@ -44,6 +41,8 @@ void	data_destroy(t_philo_data *data)
 	}
 	pthread_mutex_destroy(&data->mutex_print);
 	pthread_mutex_destroy(&data->mutex_start);
+	pthread_mutex_destroy(&data->mutex_stop);
+	pthread_mutex_destroy(&data->mutex_meal_time);
 }
 
 bool	data_join_threads(t_philo_data *data)
@@ -92,6 +91,29 @@ static bool	data_init_from_params(t_philo_data *data, int argc, char **argv)
 	return (true);
 }
 
+static bool	data_init_mutex(t_philo_data *data)
+{
+	pthread_mutex_t	*mutexes[4];
+	size_t			i;
+
+	mutexes[0] = &data->mutex_print;
+	mutexes[1] = &data->mutex_start;
+	mutexes[2] = &data->mutex_stop;
+	mutexes[3] = &data->mutex_meal_time;
+	i = 0;
+	while (i < sizeof(mutexes) / sizeof(mutexes[0]))
+	{
+		if (pthread_mutex_init(mutexes[i], NULL) != 0)
+		{
+			while (i-- > 0)
+				pthread_mutex_destroy(mutexes[i]);
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
 /**
  * @brief Initializes the given philo_data with the user input from argv
  * @param data a pointer to the t_philo_data structure to initialize
@@ -106,18 +128,15 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 	memset(data, 0, sizeof(t_philo_data));
 	if (!data_init_from_params(data, argc, argv))
 		return (false);
-	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
+	if (!data_init_mutex(data))
 		return (false);
-	if (pthread_mutex_init(&data->mutex_start, NULL) != 0)
-	{
-		pthread_mutex_destroy(&data->mutex_print);
-		return (false);
-	}
 	data->ts_initial = get_ts();
 	if (data->ts_initial == -1)
 	{
 		pthread_mutex_destroy(&data->mutex_print);
 		pthread_mutex_destroy(&data->mutex_start);
+		pthread_mutex_destroy(&data->mutex_stop);
+		pthread_mutex_destroy(&data->mutex_meal_time);
 		return (false);
 	}
 	return (true);

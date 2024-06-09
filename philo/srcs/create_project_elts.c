@@ -62,11 +62,6 @@ static bool	create_philos(t_philo_data *data)
 	}
 	if (i == data->nb_philos)
 		return (true);
-	while (i > 0)
-	{
-		t_philo_destroy(&data->philos[i - 1]);
-		i--;
-	}
 	free(data->philos);
 	data->philos = NULL;
 	return (false);

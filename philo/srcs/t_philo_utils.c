@@ -16,28 +16,6 @@
 
 #include "philo.h"
 
-void	t_philo_destroy(t_philo *philo)
-{
-	if (philo == NULL)
-		return ;
-	pthread_mutex_destroy(&philo->mutex_meal_start);
-	pthread_mutex_destroy(&philo->mutex_stop);
-}
-
-static bool	t_philo_init_mutex(t_philo *philo)
-{
-	if (philo == NULL)
-		return (false);
-	if (pthread_mutex_init(&philo->mutex_meal_start, NULL) != 0)
-		return (false);
-	if (pthread_mutex_init(&philo->mutex_stop, NULL) != 0)
-	{
-		pthread_mutex_destroy(&philo->mutex_meal_start);
-		return (false);
-	}
-	return (true);
-}
-
 bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 {
 	if (philo == NULL || data == NULL)
@@ -48,6 +26,8 @@ bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 	philo->time_to_sleep = data->time_to_sleep;
 	philo->mutex_print = &data->mutex_print;
 	philo->mutex_start = &data->mutex_start;
+	philo->mutex_stop = &data->mutex_stop;
+	philo->mutex_meal_start = &data->mutex_meal_time;
 	philo->left_fork = &data->forks[index];
 	if (data->nb_philos != 1)
 		philo->right_fork = &data->forks[(index + 1) % data->nb_philos];
@@ -57,7 +37,7 @@ bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 	philo->nb_meals_req = data->nb_meals_req;
 	philo->nb_meals_limited = data->nb_meals_limited;
 	philo->monitor = &data->monitor;
-	return (t_philo_init_mutex(philo));
+	return (true);
 }
 
 bool	philo_set_last_meal_start(t_philo *philo)
@@ -67,12 +47,12 @@ bool	philo_set_last_meal_start(t_philo *philo)
 	if (philo == NULL)
 		return (false);
 	ret = true;
-	if (pthread_mutex_lock(&philo->mutex_meal_start) != 0)
+	if (pthread_mutex_lock(philo->mutex_meal_start) != 0)
 		return (false);
 	philo->last_meal_start = get_ts();
 	if (philo->last_meal_start == -1)
 		ret = false;
-	if (pthread_mutex_unlock(&philo->mutex_meal_start) != 0)
+	if (pthread_mutex_unlock(philo->mutex_meal_start) != 0)
 		return (false);
 	return (ret);
 }
@@ -83,10 +63,10 @@ long	philo_get_last_meal_start(t_philo *philo)
 
 	if (philo == NULL)
 		return (false);
-	if (pthread_mutex_lock(&philo->mutex_meal_start) != 0)
+	if (pthread_mutex_lock(philo->mutex_meal_start) != 0)
 		return (-1);
 	ts = philo->last_meal_start;
-	if (pthread_mutex_unlock(&philo->mutex_meal_start) != 0)
+	if (pthread_mutex_unlock(philo->mutex_meal_start) != 0)
 		return (-1);
 	return (ts);
 }

@@ -71,6 +71,8 @@ struct s_philo_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_start;
+	pthread_mutex_t	mutex_stop;
+	pthread_mutex_t	mutex_meal_time;
 	long			ts_initial;
 	t_monitor		monitor;
 };
@@ -89,8 +91,8 @@ struct s_philo
 	bool			nb_meals_limited;
 	bool			stopped;
 	pthread_t		thread;
-	pthread_mutex_t	mutex_meal_start;
-	pthread_mutex_t	mutex_stop;
+	pthread_mutex_t	*mutex_meal_start;
+	pthread_mutex_t	*mutex_stop;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
@@ -128,7 +130,6 @@ bool			philo_routine_think(t_philo *philo);
 bool			philo_routine_eat(t_philo *philo);
 bool			philo_routine_sleep(t_philo *philo);
 bool			t_philo_init(t_philo *philo, t_philo_data *data, size_t index);
-void			t_philo_destroy(t_philo *philo);
 bool			philo_set_last_meal_start(t_philo *philo);
 long			philo_get_last_meal_start(t_philo *philo);
 

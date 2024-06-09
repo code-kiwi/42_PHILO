@@ -40,12 +40,12 @@ bool	philo_routine_forks(t_philo *philo)
 	if (philo == NULL)
 		return (false);
 	philo_routine_forks_init(philo, &first_fork, &second_fork);
-	if (get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+	if (get_mutex_bool(philo->mutex_stop, &philo->stopped)
 		|| pthread_mutex_lock(first_fork) != 0)
 		return (false);
 	if (
 		!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_FORK)
-		|| get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		|| get_mutex_bool(philo->mutex_stop, &philo->stopped)
 		|| pthread_mutex_lock(second_fork) != 0
 	)
 	{
@@ -64,7 +64,7 @@ bool	philo_routine_forks(t_philo *philo)
 bool	philo_routine_think(t_philo *philo)
 {
 	if (
-		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		philo == NULL || get_mutex_bool(philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_THINK)
 	)
 		return (false);
@@ -81,7 +81,7 @@ bool	philo_routine_eat(t_philo *philo)
 	bool	ret;
 
 	if (
-		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		philo == NULL || get_mutex_bool(philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_EAT)
 	)
 	{
@@ -102,7 +102,7 @@ bool	philo_routine_eat(t_philo *philo)
 bool	philo_routine_sleep(t_philo *philo)
 {
 	if (
-		philo == NULL || get_mutex_bool(&philo->mutex_stop, &philo->stopped)
+		philo == NULL || get_mutex_bool(philo->mutex_stop, &philo->stopped)
 		|| !pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_SLEEP)
 		|| !ft_msleep(philo->time_to_sleep)
 	)
