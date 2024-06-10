@@ -24,26 +24,26 @@ bool	pprint(
 {
 	int		ret;
 	long	ts;
+	bool	stopped;
 
 	ts = philo_ts(philo);
-	if (
-		mutex_print == NULL || philo == NULL || ts == -1
-		|| get_mutex_bool(philo->mutex_stop, philo->stopped)
-	)
+	if (mutex_print == NULL || philo == NULL || ts == -1)
 		return (false);
 	if (pthread_mutex_lock(mutex_print) != 0)
 		return (false);
-	if (action == ACT_FORK)
+	stopped = get_mutex_bool(philo->mutex_stop, philo->stopped);
+	ret = 0;
+	if (!stopped && action == ACT_FORK)
 		ret = printf(LOG_MSG, ts, philo->idx, MSG_FORK);
-	else if (action == ACT_EAT)
+	else if (!stopped && action == ACT_EAT)
 		ret = printf(LOG_MSG, ts, philo->idx, MSG_EAT);
-	else if (action == ACT_SLEEP)
+	else if (!stopped && action == ACT_SLEEP)
 		ret = printf(LOG_MSG, ts, philo->idx, MSG_SLEEP);
-	else if (action == ACT_THINK)
+	else if (!stopped && action == ACT_THINK)
 		ret = printf(LOG_MSG, ts, philo->idx, MSG_THINK);
-	else if (action == ACT_DIE)
+	else if (!stopped && action == ACT_DIE)
 		ret = printf(LOG_MSG, ts, philo->idx, MSG_DIE);
-	if (pthread_mutex_unlock(mutex_print) != 0 || ret == -1)
+	if (pthread_mutex_unlock(mutex_print) != 0 || stopped || ret == -1)
 		return (false);
 	return (true);
 }

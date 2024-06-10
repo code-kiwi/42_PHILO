@@ -6,10 +6,11 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:13 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 12:54:17 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:23:01 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "philo.h"

@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 13:46:54 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:48:22 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ struct s_philo
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			last_meal_start;
-	size_t			nb_meals_had;
+	size_t			nb_meals;
 	size_t			nb_meals_req;
 	bool			nb_meals_limited;
 	pthread_t		thread;

@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 11:49:52 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:58:51 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "philo.h"
 
-static bool	philo_routine_wait_monitor(t_philo *philo)
+static bool	philo_rout_wait_monitor(t_philo *philo)
 {
 	if (philo == NULL || philo->monitor == NULL)
 		return (false);
@@ -63,17 +63,20 @@ void	*philo_routine(void *philo_ptr)
 {
 	t_philo	*philo;
 
-	if (philo_ptr == NULL)
-		return (NULL);
 	philo = (t_philo *) philo_ptr;
-	if (!philo_routine_wait_monitor(philo) || !philo_routine_init(philo))
+	if (!philo || !philo_rout_wait_monitor(philo) || !philo_routine_init(philo))
 		return (NULL);
 	while (true)
 	{
-		if (!philo_routine_forks(philo) || !philo_routine_eat(philo))
+		if (!philo_routine_forks(philo))
+		{
+			if (philo->nb_philos == 1)
+				return (NULL);
 			break ;
-		if (philo->nb_meals_limited
-			&& philo->nb_meals_had == philo->nb_meals_req)
+		}
+		if (!philo_routine_eat(philo))
+			break ;
+		if (philo->nb_meals_limited && philo->nb_meals == philo->nb_meals_req)
 		{
 			if (!set_mutex_bool(philo->mutex_stop, &philo->finished, true))
 				break ;
@@ -82,6 +85,5 @@ void	*philo_routine(void *philo_ptr)
 		if (!philo_routine_sleep(philo) || !philo_routine_think(philo))
 			break ;
 	}
-	set_mutex_bool(philo->mutex_stop, philo->stopped, true);
-	return (NULL);
+	return (set_mutex_bool(philo->mutex_stop, philo->stopped, true), NULL);
 }

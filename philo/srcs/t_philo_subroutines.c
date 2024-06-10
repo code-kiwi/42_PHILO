@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 14:00:54 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:48:22 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	philo_routine_eat(t_philo *philo)
 	ret = ft_msleep(philo->time_to_eat) && ret;
 	ret = t_fork_put_down(philo->left_fork) && ret;
 	ret = t_fork_put_down(philo->right_fork) && ret;
-	philo->nb_meals_had += 1;
+	philo->nb_meals += 1;
 	return (ret);
 }
 
