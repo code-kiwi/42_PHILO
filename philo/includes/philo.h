@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 14:49:28 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 09:55:03 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,9 @@ int				ft_isdigit(int c);
 int				ft_isspace(int c);
 size_t			ft_strlen(const char *s);
 void			print_error(char *str);
-bool			pprint(pthread_mutex_t *mutex_print, long ts, \
-					size_t idx, enum e_philo_action_type action);
+bool			pprint(pthread_mutex_t *mutex_print, t_philo *philo, \
+					enum e_philo_action_type action);
+bool			pprint_death(pthread_mutex_t *mutex_print, t_philo *philo);
 bool			get_mutex_bool(pthread_mutex_t *mutex, bool *var_add);
 bool			set_mutex_bool(pthread_mutex_t *mutex, \
 					bool *var_addr, bool val);

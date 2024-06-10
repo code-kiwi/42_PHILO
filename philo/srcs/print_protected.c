@@ -18,26 +18,31 @@
 #include "philo.h"
 
 bool	pprint(
-	pthread_mutex_t *mutex_print, long ts,
-	size_t idx, enum e_philo_action_type action
+	pthread_mutex_t *mutex_print, t_philo *philo,
+	enum e_philo_action_type action
 )
 {
-	int	ret;
+	int		ret;
+	long	ts;
 
-	if (mutex_print == NULL || ts == -1)
+	ts = philo_ts(philo);
+	if (
+		mutex_print == NULL || philo == NULL || ts == -1
+		|| get_mutex_bool(philo->mutex_stop, philo->stopped)
+	)
 		return (false);
 	if (pthread_mutex_lock(mutex_print) != 0)
 		return (false);
 	if (action == ACT_FORK)
-		ret = printf(LOG_MSG, ts, idx, MSG_FORK);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_FORK);
 	else if (action == ACT_EAT)
-		ret = printf(LOG_MSG, ts, idx, MSG_EAT);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_EAT);
 	else if (action == ACT_SLEEP)
-		ret = printf(LOG_MSG, ts, idx, MSG_SLEEP);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_SLEEP);
 	else if (action == ACT_THINK)
-		ret = printf(LOG_MSG, ts, idx, MSG_THINK);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_THINK);
 	else if (action == ACT_DIE)
-		ret = printf(LOG_MSG, ts, idx, MSG_DIE);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_DIE);
 	if (pthread_mutex_unlock(mutex_print) != 0 || ret == -1)
 		return (false);
 	return (true);
@@ -68,3 +73,19 @@ bool	pprint(
 // 		return (false);
 // 	return (true);
 // }
+
+bool	pprint_death(pthread_mutex_t *mutex_print, t_philo *philo)
+{
+	int		ret;
+	long	ts;
+
+	ts = philo_ts(philo);
+	if (mutex_print == NULL || philo == NULL || ts == -1)
+		return (false);
+	if (pthread_mutex_lock(mutex_print) != 0)
+		return (false);
+	ret = printf(LOG_MSG, ts, philo->idx, MSG_DIE);
+	if (pthread_mutex_unlock(mutex_print) != 0 || ret == -1)
+		return (false);
+	return (true);
+}

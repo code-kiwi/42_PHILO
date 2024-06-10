@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 15:03:30 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 09:55:19 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	t_monitor_routine_loop_death(t_philo *philo)
 {
 	if (!set_mutex_bool(philo->mutex_stop, philo->stopped, true))
 		return (false);
-	if (!pprint(philo->mutex_print, philo_ts(philo), philo->idx, ACT_DIE))
+	if (!pprint_death(philo->mutex_print, philo))
 		return (false);
 	return (true);
 }
