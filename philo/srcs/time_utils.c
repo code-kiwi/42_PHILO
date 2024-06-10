@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/30 12:32:45 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 10:52:04 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ long	philo_ts(t_philo *philo)
 	ts = get_ts();
 	if (ts == -1)
 		return (-1);
-	return (ts - philo->ts_initial);
+	return (ts - *(philo->ts_initial));
 }
 
 /**

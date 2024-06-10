@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 09:55:19 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:50:03 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@
 
 #include "philo.h"
 
+static bool	t_monitor_all_finished(t_monitor *monitor)
+{
+	size_t	i;
+	t_philo	*philo;
+
+	if (monitor == NULL || !monitor->nb_meals_limited)
+		return (false);
+	i = 0;
+	while (i < monitor->nb_philos)
+	{
+		philo = &monitor->philos[i];
+		if (get_mutex_bool(philo->mutex_stop, &philo->finished))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 static bool	t_monitor_routine_start(t_monitor *monitor)
 {
 	bool	error;
@@ -26,9 +44,7 @@ static bool	t_monitor_routine_start(t_monitor *monitor)
 		return (false);
 	if (*(monitor->nb_philos_launched) != monitor->nb_philos)
 		error = true;
-	if (pthread_mutex_unlock(monitor->mutex_start) != 0)
-		return (false);
-	if (error)
+	if (pthread_mutex_unlock(monitor->mutex_start) != 0 || error)
 		return (false);
 	if (!set_mutex_bool(&monitor->mutex_monitor_start, &monitor->started, true))
 		return (false);
@@ -54,6 +70,8 @@ static bool	t_monitor_routine_loop(t_monitor *monitor)
 	while (true)
 	{
 		i = 0;
+		if (t_monitor_all_finished(monitor))
+			return (true);
 		while (i < monitor->nb_philos)
 		{
 			philo = &monitor->philos[i];

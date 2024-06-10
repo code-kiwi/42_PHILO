@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 13:55:21 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:33:07 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	t_monitor_init(t_monitor *monitor, t_philo_data *data)
 	monitor->thread_created = false;
 	monitor->started = false;
 	monitor->error = false;
+	monitor->nb_meals_limited = data->nb_meals_limited;
 	monitor->time_to_die = data->time_to_die;
 	monitor->nb_philos = data->nb_philos;
 	monitor->nb_philos_launched = &data->nb_philos_launched;

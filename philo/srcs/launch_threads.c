@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 09:41:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/31 13:42:05 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 10:50:56 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ bool	launch_threads(t_philo_data *data)
 		data->nb_philos_launched += 1;
 		i++;
 	}
+	data->ts_initial = get_ts();
 	returned = launch_monitoring(data);
 	if (pthread_mutex_unlock(&data->mutex_start) != 0 || !returned
+		|| data->ts_initial == -1
 		|| data->nb_philos_launched != data->nb_philos)
 		return (false);
 	return (true);

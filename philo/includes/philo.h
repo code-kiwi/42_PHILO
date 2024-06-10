@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 09:55:03 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:32:35 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct s_monitor
 	bool			thread_created;
 	bool			started;
 	bool			error;
+	bool			nb_meals_limited;
 	long			time_to_die;
 	size_t			nb_philos;
 	size_t			*nb_philos_launched;
@@ -82,16 +83,17 @@ struct s_philo
 {
 	size_t			idx;
 	size_t			nb_philos;
-	size_t			*nb_philos_launched;
 	long			time_to_eat;
 	long			time_to_sleep;
-	long			ts_initial;
 	long			last_meal_start;
 	size_t			nb_meals_had;
 	size_t			nb_meals_req;
 	bool			nb_meals_limited;
-	bool			*stopped;
 	pthread_t		thread;
+	bool			finished;
+	bool			*stopped;
+	size_t			*nb_philos_launched;
+	long			*ts_initial;
 	pthread_mutex_t	*mutex_meal_start;
 	pthread_mutex_t	*mutex_stop;
 	pthread_mutex_t	*left_fork;
