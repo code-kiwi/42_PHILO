@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 11:33:07 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:03:27 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 
 #include "philo.h"
 
+/**
+ * @brief Initializes the given monitor
+ * 
+ * Sets all the members of a given monitor according to the given data
+ * Instanciates the mutex members
+ * @param monitor The monitor to init
+ * @param data The project's data from which fields will be taken
+ * @return true on SUCCESS, false on ERROR
+*/
 bool	t_monitor_init(t_monitor *monitor, t_philo_data *data)
 {
 	if (monitor == NULL || data == NULL)
@@ -42,6 +51,11 @@ bool	t_monitor_init(t_monitor *monitor, t_philo_data *data)
 	return (true);
 }
 
+/**
+ * @brief Indicates if the given monitor has been started
+ * @param monitor The monitor whose status is checked
+ * @return true if the monitor has been started, else false
+*/
 bool	t_monitoring_is_on(t_monitor *monitor)
 {
 	if (monitor == NULL)
@@ -50,6 +64,11 @@ bool	t_monitoring_is_on(t_monitor *monitor)
 		&monitor->started));
 }
 
+/**
+ * @brief Sets the given monitor's error flag to true
+ * @param monitor The monitor to set on error
+ * @return true on SUCCESS, else FALSE
+*/
 bool	t_monitoring_set_error(t_monitor *monitor)
 {
 	if (monitor == NULL)
@@ -62,6 +81,11 @@ bool	t_monitoring_set_error(t_monitor *monitor)
 	return (true);
 }
 
+/**
+ * @brief Indicates if the given monitor is on error
+ * @param monitor The monitor whose error status is checked
+ * @return true if the monitor is on error, else false
+*/
 bool	t_monitoring_is_on_error(t_monitor *monitor)
 {
 	if (monitor == NULL)

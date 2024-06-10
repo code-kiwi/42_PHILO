@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 10:52:04 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:11:33 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ long	get_ts(void)
 }
 
 /**
- * @brief Returns the current timestamp of a philo, based on its initial ts
- * @param philo the philo whose current timestamp is expected
- * @return the timestamp as a long number
+ * @brief Returns the current timestamp of a philo, based on its initial ts ptr
+ * @param philo The philo whose current timestamp is expected
+ * @return The timestamp as a long number
 */
 long	philo_ts(t_philo *philo)
 {
@@ -66,7 +66,7 @@ long	philo_ts(t_philo *philo)
  * @brief Pauses the program during the given time
  * This function was created because of usleep lack of precision
  * 
- * @param time the time to pause, in microseconds
+ * @param time The time to pause, in microseconds
  * @return true if all went well, else returns false
 */
 bool	ft_usleep(long time)
@@ -98,7 +98,7 @@ bool	ft_usleep(long time)
 
 /**
  * @brief Pauses the program during the given time
- * @param time the time to pause, in milliseconds
+ * @param time The time to pause, in milliseconds
  * @return true if all went well, else returns false
 */
 bool	ft_msleep(size_t time)

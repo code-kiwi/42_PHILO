@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 13:44:19 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:10:00 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	data_destroy(t_philo_data *data)
 	pthread_mutex_destroy(&data->mutex_meal_time);
 }
 
+/**
+ * @brief Join all the threads launched for the project
+ * @param data The project's data address, where the threads are saved
+ * @return true on SUCCESS, false on ERROR
+*/
 bool	data_join_threads(t_philo_data *data)
 {
 	size_t	i;
@@ -68,6 +73,15 @@ bool	data_join_threads(t_philo_data *data)
 	return (ret);
 }
 
+/**
+ * @brief Sets the given project's data members whose values are retrieved from
+ * user inputs
+ * @param data The project's data structure (its address) to affect
+ * @param argc The number of arguments passed to the program
+ * @param argv The arguments passed to the project
+ * @return true on SUCCESS, false on ERROR
+ * @note This functions prints an error message when an error is encountered
+*/
 static bool	data_init_from_params(t_philo_data *data, int argc, char **argv)
 {
 	if (data == NULL || argc < 5 || argc > 6 || argv == NULL)
@@ -91,6 +105,11 @@ static bool	data_init_from_params(t_philo_data *data, int argc, char **argv)
 	return (true);
 }
 
+/**
+ * @brief Initializes all the mutexes of the given project's data
+ * @param data The project's data whose mutexes need to be initialized
+ * @return true on SUCCESS, false on ERROR
+*/
 static bool	data_init_mutex(t_philo_data *data)
 {
 	pthread_mutex_t	*mutexes[4];
@@ -130,14 +149,5 @@ bool	data_init(t_philo_data *data, int argc, char **argv)
 		return (false);
 	if (!data_init_mutex(data))
 		return (false);
-	data->ts_initial = get_ts();
-	if (data->ts_initial == -1)
-	{
-		pthread_mutex_destroy(&data->mutex_print);
-		pthread_mutex_destroy(&data->mutex_start);
-		pthread_mutex_destroy(&data->mutex_stop);
-		pthread_mutex_destroy(&data->mutex_meal_time);
-		return (false);
-	}
 	return (true);
 }

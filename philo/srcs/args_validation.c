@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:08:07 by mhotting          #+#    #+#             */
-/*   Updated: 2024/05/24 10:45:43 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:40:52 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 /**
  * @brief Checks if the given string, converted to a number is <= INT_MAX
- * @param str the string to parse
+ * @param str The string to parse
  * @return true if str is valid, else returns false
 */
 static bool	is_int_overflow(char *str)
@@ -47,7 +47,7 @@ static bool	is_int_overflow(char *str)
  * 	- after spaces, a '+' sign is accepted
  * 	- then only digits are considered as valid
  * 	- the number represented is an integer >= 0 and <= INT_MAX
- * @param str the string to validate
+ * @param str The string to validate
  * @return true if the string is valid number, else returns false
 */
 static bool	is_a_valid_number(char *str)
@@ -74,8 +74,8 @@ static bool	is_a_valid_number(char *str)
 
 /**
  * @brief Checks the program arguments validity
- * @param argc the number of arguments
- * @param argv the arguments
+ * @param argc The number of arguments
+ * @param argv The arguments
  * @return true if the given args are valid, else returns false
 */
 bool	validate_args(int argc, char **argv)
