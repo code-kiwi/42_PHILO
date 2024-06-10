@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 11:50:03 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:27:42 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	t_monitor_all_finished(t_monitor *monitor)
 	while (i < monitor->nb_philos)
 	{
 		philo = &monitor->philos[i];
-		if (get_mutex_bool(philo->mutex_stop, &philo->finished))
+		if (!get_mutex_bool(philo->mutex_stop, &philo->finished))
 			return (false);
 		i++;
 	}
