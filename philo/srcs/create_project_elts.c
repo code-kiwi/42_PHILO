@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:00:22 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 14:45:34 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:43:46 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ static bool	create_forks(t_philo_data *data)
 {
 	size_t	i;
 
-	data->forks = (pthread_mutex_t *) \
-		malloc(data->nb_philos * sizeof(pthread_mutex_t));
+	data->forks = (t_fork *) malloc(data->nb_philos * sizeof(t_fork));
 	if (data->forks == NULL)
 		return (false);
 	i = 0;
 	while (i < data->nb_philos)
 	{
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		if (!t_fork_init(&data->forks[i]))
 			break ;
 		i++;
 	}
@@ -36,7 +35,7 @@ static bool	create_forks(t_philo_data *data)
 		return (true);
 	while (i > 0)
 	{
-		pthread_mutex_destroy(&data->forks[i - 1]);
+		t_fork_destroy(&data->forks[i - 1]);
 		i--;
 	}
 	free(data->forks);

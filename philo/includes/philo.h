@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 11:32:35 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:46:54 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ struct s_philo_data
 	bool			nb_meals_limited;
 	bool			stopped;
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
+	t_fork			*forks;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_start;
 	pthread_mutex_t	mutex_stop;
@@ -94,13 +94,19 @@ struct s_philo
 	bool			*stopped;
 	size_t			*nb_philos_launched;
 	long			*ts_initial;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
 	pthread_mutex_t	*mutex_meal_start;
 	pthread_mutex_t	*mutex_stop;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*mutex_print;
 	pthread_mutex_t	*mutex_start;
 	t_monitor		*monitor;
+};
+
+struct s_fork
+{
+	bool			taken;
+	pthread_mutex_t	mutex;
 };
 
 enum e_philo_action_type
@@ -145,6 +151,12 @@ bool			t_monitoring_is_on(t_monitor *monitor);
 void			*t_monitor_routine(void *monitor_ptr);
 bool			t_monitoring_set_error(t_monitor *monitor);
 bool			t_monitoring_is_on_error(t_monitor *monitor);
+
+// Fork functions
+bool			t_fork_init(t_fork *fork);
+void			t_fork_destroy(t_fork *fork);
+bool			t_fork_take(t_fork *fork);
+bool			t_fork_put_down(t_fork *fork);
 
 // Utils functions
 unsigned long	ft_atoul(const char *nb_ptr);

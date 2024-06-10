@@ -6,7 +6,7 @@
 #    By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:58:10 by mhotting          #+#    #+#              #
-#    Updated: 2024/05/31 13:58:01 by mhotting         ###   ########.fr        #
+#    Updated: 2024/06/10 13:40:19 by mhotting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS_FILES				=	args_validation.c		\
 							t_philo_routine.c		\
 							t_philo_subroutines.c	\
 							t_philo_utils.c			\
+							t_fork_utils.c			\
 							time_utils.c			\
 							utils1.c				\
 							utils2.c

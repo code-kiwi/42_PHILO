@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:37:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/07 14:49:37 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:44:19 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	data_destroy(t_philo_data *data)
 	{
 		i = 0;
 		while (i < data->nb_philos)
-			pthread_mutex_destroy(&data->forks[i++]);
+			t_fork_destroy(&data->forks[i++]);
 		free(data->forks);
 		data->forks = NULL;
 	}
