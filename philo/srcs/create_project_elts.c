@@ -17,6 +17,11 @@
 
 #include "philo.h"
 
+/**
+ * @brief Create forks for the project's data
+ * @param data The project's data
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	create_forks(t_philo_data *data)
 {
 	size_t	i;
@@ -43,6 +48,11 @@ static bool	create_forks(t_philo_data *data)
 	return (false);
 }
 
+/**
+ * @brief Create philos for the project's data
+ * @param data The project's data
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	create_philos(t_philo_data *data)
 {
 	size_t	i;
@@ -66,6 +76,11 @@ static bool	create_philos(t_philo_data *data)
 	return (false);
 }
 
+/**
+ * @brief Creates forks, philos and monitor for the project's data
+ * @param data The project's data
+ * @return true in case of SUCCESS, false on ERROR
+ */
 bool	create_project_elts(t_philo_data *data)
 {
 	if (data == NULL)

@@ -17,6 +17,13 @@
 
 #include "philo.h"
 
+/**
+ * @brief Waits for the monitor to be started
+ * @param philo The philo who will wait for the monitor
+ * @return true on SUCCESS, false on ERROR
+ * @note if an error occured with the monitoring, errno will be set and make
+ * the function fail
+ */
 static bool	philo_rout_wait_monitor(t_philo *philo)
 {
 	if (philo == NULL || philo->monitor == NULL)
@@ -32,6 +39,16 @@ static bool	philo_rout_wait_monitor(t_philo *philo)
 	return (true);
 }
 
+/**
+ * @brief Philo's routine initialization
+ * 
+ * Steps:
+ * 	- locks/unlocks the start mutex in order to sync. the philo with the other
+ * 	- if the philo's index is even, the philo will wait (sync.)
+ * 	- if the number of philos is odd, the last philo will wait (sync.)
+ * @param philo The philo whose routine will be started
+ * @return true on SUCCESS, false on ERROR
+ */
 static bool	philo_routine_init(t_philo *philo)
 {
 	if (philo == NULL || pthread_mutex_lock(philo->mutex_start) != 0)
@@ -59,6 +76,17 @@ static bool	philo_routine_init(t_philo *philo)
 	return (true);
 }
 
+/**
+ * @brief Philo's thread routine function
+ * 
+ * Initializes the philo before launching the routine loop
+ * Then multiples steps: take forks, eat, sleep and think
+ * After eating, if the number of meals requested has been reached, the
+ * philo's finished flag is set to true (protected by a mutex)
+ * In case of error, the loop is stopped and the meal stopped flag is
+ * activated
+ * @param philo_ptr A pointer to the philo whose routine is launched
+ */
 void	*philo_routine(void *philo_ptr)
 {
 	t_philo	*philo;

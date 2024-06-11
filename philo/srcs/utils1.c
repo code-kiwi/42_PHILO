@@ -52,7 +52,7 @@ int	ft_isdigit(int c)
 /**
  * @brief Checks a character is a space (as defined in the real isspace() func)
  * @param c the character to check
- * @return true is c is a space, else false
+ * @return true if c is a space, else false
 */
 int	ft_isspace(int c)
 {

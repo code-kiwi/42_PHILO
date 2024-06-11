@@ -48,6 +48,15 @@
 // 	return (true);
 // }
 
+/**
+ * @brief Prints the action message for the given philo
+ * 
+ * The printing process checks the stop status of the given philo in order
+ * to avoid displaying after the end of the meal
+ * @param mutex_print The mutex that which protects the printing process
+ * @param philo The philo whose action needs to be displayed
+ * @return true in case of SUCCESS, false on ERROR
+ */
 bool	pprint(
 	pthread_mutex_t *mutex_print, t_philo *philo,
 	enum e_philo_action_type action
@@ -77,6 +86,12 @@ bool	pprint(
 	return (true);
 }
 
+/**
+ * @brief Prints the death message for the given philo
+ * @param mutex_print The mutex that which protects the printing process
+ * @param philo The philo who dies
+ * @return true in case of SUCCESS, false on ERROR
+ */
 bool	pprint_death(pthread_mutex_t *mutex_print, t_philo *philo)
 {
 	int		ret;

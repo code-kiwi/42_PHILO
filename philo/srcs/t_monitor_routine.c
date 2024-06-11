@@ -17,6 +17,12 @@
 
 #include "philo.h"
 
+/**
+ * @brief Checks if all the philos of the given monitor have activated their
+ * finished flag
+ * @param monitor The monitor whose philos will be checked
+ * @return true if all philos are in a finished state, else false
+ */
 static bool	t_monitor_all_finished(t_monitor *monitor)
 {
 	size_t	i;
@@ -35,6 +41,11 @@ static bool	t_monitor_all_finished(t_monitor *monitor)
 	return (true);
 }
 
+/**
+ * @brief Initializes the given monitor
+ * @param monitor The monitor to init
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	t_monitor_routine_start(t_monitor *monitor)
 {
 	bool	error;
@@ -51,6 +62,14 @@ static bool	t_monitor_routine_start(t_monitor *monitor)
 	return (true);
 }
 
+/**
+ * @brief Handles a philo's death
+ * 
+ * Stops the mutex protected stopped flag
+ * Prints the death message
+ * @param philo The philo who dies
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	t_monitor_routine_loop_death(t_philo *philo)
 {
 	if (!set_mutex_bool(philo->mutex_stop, philo->stopped, true))
@@ -60,6 +79,15 @@ static bool	t_monitor_routine_loop_death(t_philo *philo)
 	return (true);
 }
 
+/**
+ * @brief Monitor checking loop
+ * 
+ * While the meal is not done:
+ * 	- checks if all philos have a finished state
+ * 	- checks if the stopped meal flag has been activated
+ * 	- checks if one philo is dead
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	t_monitor_routine_loop(t_monitor *monitor)
 {
 	size_t	i;
@@ -88,6 +116,10 @@ static bool	t_monitor_routine_loop(t_monitor *monitor)
 	}
 }
 
+/**
+ * @brief Monitor's thread routine function
+ * @param monitor_ptr A pointer to the monitor whose routine is launched
+ */
 void	*t_monitor_routine(void *monitor_ptr)
 {
 	t_monitor	*monitor;

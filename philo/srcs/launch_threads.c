@@ -15,6 +15,11 @@
 
 #include "philo.h"
 
+/**
+ * @brief Launches the monitoring thread
+ * @param data The project's data
+ * @return true in case of SUCCESS, false on ERROR
+ */
 static bool	launch_monitoring(t_philo_data *data)
 {
 	t_monitor	*monitor;
@@ -28,6 +33,11 @@ static bool	launch_monitoring(t_philo_data *data)
 	return (true);
 }
 
+/**
+ * @brief Launches all the threads for the project: for philos and monitoring
+ * @param data The project's data
+ * @return true in case of SUCCESS, false on ERROR
+ */
 bool	launch_threads(t_philo_data *data)
 {
 	size_t	i;

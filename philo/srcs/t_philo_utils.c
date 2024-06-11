@@ -16,6 +16,14 @@
 
 #include "philo.h"
 
+/**
+ * @brief Initializes the given philo
+ * 
+ * Sets all the members of a given philo according to the given data
+ * @param monitor The philo to init
+ * @param data The project's data from which fields will be taken
+ * @return true on SUCCESS, false on ERROR
+*/
 bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 {
 	if (philo == NULL || data == NULL)
@@ -41,6 +49,13 @@ bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 	return (true);
 }
 
+/**
+ * @brief Sets the philo last meal time
+ * 
+ * The meal time start is protected by a mutex
+ * @param philo The philo whose meal time start needs to be set
+ * @return true on SUCCESS, false on ERROR
+ */
 bool	philo_set_last_meal_start(t_philo *philo)
 {
 	bool	ret;
@@ -58,6 +73,13 @@ bool	philo_set_last_meal_start(t_philo *philo)
 	return (ret);
 }
 
+/**
+ * @brief Returns the philo last meal time
+ * 
+ * The meal time start is protected by a mutex
+ * @param philo The philo whose meal time start needs is requested
+ * @return The last meal time start
+ */
 long	philo_get_last_meal_start(t_philo *philo)
 {
 	long	ts;

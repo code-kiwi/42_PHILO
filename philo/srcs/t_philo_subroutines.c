@@ -16,6 +16,15 @@
 
 #include "philo.h"
 
+/**
+ * @brief Initializes the fork pointers with the right philo's forks
+ * 
+ * In order to avoid data races, odd philos will take the forks in an order
+ * and the even philos will take them in the other order
+ * @param philo The philo whose forks have to be selected
+ * @param first_fork The pointer to the first fork to select
+ * @param second_fork The pointer to the second fork to select
+ */
 static void	philo_routine_forks_init(
 	t_philo *philo, t_fork **first_fork, t_fork **second_fork
 )
@@ -32,6 +41,15 @@ static void	philo_routine_forks_init(
 	}
 }
 
+/**
+ * @brief Makes the given philo take both its forks
+ * 
+ * Takes both forks (protected by their mutexes)
+ * Prints when they are taken (print protection by a mutex)
+ * If the meal has stopped, the print will fail and the action will stop
+ * @param philo The philo whose forks will be taken
+ * @return true on SUCCESS, false on ERROR
+ */
 bool	philo_routine_forks(t_philo *philo)
 {
 	t_fork	*first_fork;
@@ -59,6 +77,17 @@ bool	philo_routine_forks(t_philo *philo)
 	return (true);
 }
 
+/**
+ * @brief Makes the given philo think
+ * 
+ * Prints the think message (protected by print mutex)
+ * If the meal has stopped, the print will fail
+ * @param philo The philo who will think
+ * @return true on SUCCESS, false on ERROR
+ * @note The thinking process differs if there is an odd number of philos
+ * In order to keep philos sync. the thinking process will consist of a meal_time
+ * pause
+ */
 bool	philo_routine_think(t_philo *philo)
 {
 	if (philo == NULL || !pprint(philo->mutex_print, philo, ACT_THINK))
@@ -71,6 +100,17 @@ bool	philo_routine_think(t_philo *philo)
 	return (true);
 }
 
+/**
+ * @brief Makes the given philo eat
+ * 
+ * Prints the eat message (protected by print mutex)
+ * Sets the new last meal time (mutex protection)
+ * Sleeps time_to_eat milliseconds
+ * Puts down the philo's forks (mutex protection)
+ * Increases the number of meals
+ * @param philo The philo whose forks will be taken
+ * @return true on SUCCESS, false on ERROR
+ */
 bool	philo_routine_eat(t_philo *philo)
 {
 	bool	ret;
@@ -91,6 +131,14 @@ bool	philo_routine_eat(t_philo *philo)
 	return (ret);
 }
 
+/**
+ * @brief Makes the given philo sleep
+ * 
+ * Prints the sleep message (protected by print mutex)
+ * Sleeps time_to_sleep milliseconds
+ * @param philo The philo whose forks will be taken
+ * @return true on SUCCESS, false on ERROR
+ */
 bool	philo_routine_sleep(t_philo *philo)
 {
 	if (

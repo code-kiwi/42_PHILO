@@ -92,7 +92,7 @@ struct s_philo
 	bool			finished;
 	bool			*stopped;
 	size_t			*nb_philos_launched;
-	long			*ts_initial;
+	long			ts_initial;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_mutex_t	*mutex_meal_start;
