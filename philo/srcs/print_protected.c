@@ -17,37 +17,6 @@
 
 #include "philo.h"
 
-// bool	pprint(
-// 	pthread_mutex_t *mutex_print, t_philo *philo,
-// 	enum e_philo_action_type action
-// )
-// {
-// 	int		ret;
-// 	long	ts;
-// 	bool	stopped;
-
-// 	ts = philo_ts(philo);
-// 	if (mutex_print == NULL || philo == NULL || ts == -1)
-// 		return (false);
-// 	if (pthread_mutex_lock(mutex_print) != 0)
-// 		return (false);
-// 	stopped = get_mutex_bool(philo->mutex_stop, philo->stopped);
-// 	ret = 0;
-// 	if (!stopped && action == ACT_FORK)
-// 		ret = printf(LOG_MSG, ts, philo->idx, MSG_FORK);
-// 	else if (!stopped && action == ACT_EAT)
-// 		ret = printf(LOG_MSG, ts, philo->idx, MSG_EAT);
-// 	else if (!stopped && action == ACT_SLEEP)
-// 		ret = printf(LOG_MSG, ts, philo->idx, MSG_SLEEP);
-// 	else if (!stopped && action == ACT_THINK)
-// 		ret = printf(LOG_MSG, ts, philo->idx, MSG_THINK);
-// 	else if (!stopped && action == ACT_DIE)
-// 		ret = printf(LOG_MSG, ts, philo->idx, MSG_DIE);
-// 	if (pthread_mutex_unlock(mutex_print) != 0 || stopped || ret == -1)
-// 		return (false);
-// 	return (true);
-// }
-
 /**
  * @brief Prints the action message for the given philo
  * 
