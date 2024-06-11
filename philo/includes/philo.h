@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:08:50 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 15:18:16 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:16:43 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ struct s_philo
 	bool			finished;
 	bool			*stopped;
 	size_t			*nb_philos_launched;
-	long			ts_initial;
+	long			*ts_initial;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_mutex_t	*mutex_meal_start;
