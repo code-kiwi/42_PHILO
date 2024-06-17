@@ -6,7 +6,7 @@
 /*   By: codekiwi <codekiwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/17 13:35:35 by codekiwi         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:47:12 by codekiwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	philo_rout_wait_monitor(t_philo *philo)
 		return (false);
 	while (!t_monitoring_is_on(philo->monitor))
 	{
-		if (errno != 0 || !ft_usleep(500))
+		if (errno != 0 || !ft_usleep(10))
 		{
 			set_mutex_bool(philo->mutex_stop, philo->stopped, true);
 			return (false);
