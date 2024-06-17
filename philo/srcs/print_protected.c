@@ -43,13 +43,13 @@ bool	pprint(
 	stopped = get_mutex_bool(philo->mutex_stop, philo->stopped);
 	ret = 0;
 	if (!stopped && action == ACT_FORK)
-		ret = printf(COL_YELLOW LOG_MSG COL_RESET, ts, philo->idx, MSG_FORK);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_FORK);
 	else if (!stopped && action == ACT_EAT)
-		ret = printf(COL_GREEN LOG_MSG COL_RESET, ts, philo->idx, MSG_EAT);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_EAT);
 	else if (!stopped && action == ACT_SLEEP)
-		ret = printf(COL_CYAN LOG_MSG COL_RESET, ts, philo->idx, MSG_SLEEP);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_SLEEP);
 	else if (!stopped && action == ACT_THINK)
-		ret = printf(COL_BLUE LOG_MSG COL_RESET, ts, philo->idx, MSG_THINK);
+		ret = printf(LOG_MSG, ts, philo->idx, MSG_THINK);
 	if (pthread_mutex_unlock(mutex_print) != 0 || stopped || ret == -1)
 		return (false);
 	return (true);

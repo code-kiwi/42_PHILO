@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_philo_routine.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codekiwi <codekiwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 14:58:51 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:35:35 by codekiwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static bool	philo_routine_init(t_philo *philo)
 {
 	if (philo == NULL || pthread_mutex_lock(philo->mutex_start) != 0)
 		return (false);
-	if (*(philo->nb_philos_launched) != philo->nb_philos)
-		set_mutex_bool(philo->mutex_stop, philo->stopped, true);
 	if (pthread_mutex_unlock(philo->mutex_start) != 0)
 		return (false);
 	if (!philo_set_last_meal_start(philo))
@@ -63,11 +61,9 @@ static bool	philo_routine_init(t_philo *philo)
 		return (false);
 	}
 	if (
-		get_mutex_bool(philo->mutex_stop, philo->stopped)
-		|| (philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
+		(philo->idx % 2 == 0 && !ft_msleep(philo->time_to_eat / 2))
 		|| (philo->nb_philos % 2 != 0 && philo->idx == philo->nb_philos
 			&& !ft_msleep(philo->time_to_eat))
-		|| !philo_set_last_meal_start(philo)
 	)
 	{
 		set_mutex_bool(philo->mutex_stop, philo->stopped, true);

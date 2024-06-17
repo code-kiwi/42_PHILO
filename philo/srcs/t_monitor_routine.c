@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_monitor_routine.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codekiwi <codekiwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 15:27:42 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:21:07 by codekiwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static bool	t_monitor_routine_start(t_monitor *monitor)
 	error = false;
 	if (monitor == NULL || pthread_mutex_lock(monitor->mutex_start) != 0)
 		return (false);
-	if (*(monitor->nb_philos_launched) != monitor->nb_philos)
-		error = true;
 	if (pthread_mutex_unlock(monitor->mutex_start) != 0 || error)
 		return (false);
 	if (!set_mutex_bool(&monitor->mutex_monitor_start, &monitor->started, true))
