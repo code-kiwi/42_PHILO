@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:30:08 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 16:11:33 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:05:21 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ bool	ft_usleep(long time)
 			return (false);
 		elapsed = curr_ts - init_ts;
 		remaining = time - elapsed;
-		if (remaining < 100)
+		if (remaining < 50)
 			break ;
 		if (usleep(remaining / 2) == -1)
 			return (false);

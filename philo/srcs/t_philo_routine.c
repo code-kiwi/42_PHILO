@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_philo_routine.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codekiwi <codekiwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/17 18:47:12 by codekiwi         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:04:40 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	philo_rout_wait_monitor(t_philo *philo)
 		return (false);
 	while (!t_monitoring_is_on(philo->monitor))
 	{
-		if (errno != 0 || !ft_usleep(10))
+		if (errno != 0 || !ft_usleep(100))
 		{
 			set_mutex_bool(philo->mutex_stop, philo->stopped, true);
 			return (false);
@@ -51,10 +51,6 @@ static bool	philo_rout_wait_monitor(t_philo *philo)
  */
 static bool	philo_routine_init(t_philo *philo)
 {
-	if (philo == NULL || pthread_mutex_lock(philo->mutex_start) != 0)
-		return (false);
-	if (pthread_mutex_unlock(philo->mutex_start) != 0)
-		return (false);
 	if (!philo_set_last_meal_start(philo))
 	{
 		set_mutex_bool(philo->mutex_stop, philo->stopped, true);
