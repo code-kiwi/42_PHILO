@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/19 18:15:16 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:47:15 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static bool	t_monitor_all_finished(t_monitor *monitor)
 			return (false);
 		i++;
 	}
+	set_mutex_bool(philo->mutex_stop, philo->stopped, true);
 	return (true);
 }
 

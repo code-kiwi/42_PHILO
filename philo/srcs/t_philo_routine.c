@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/19 18:04:40 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:48:04 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	*philo_routine(void *philo_ptr)
 		{
 			if (!set_mutex_bool(philo->mutex_stop, &philo->finished, true))
 				break ;
-			return (NULL);
 		}
 		if (!philo_routine_sleep(philo) || !philo_routine_think(philo))
 			break ;
