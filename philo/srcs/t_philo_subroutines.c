@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:50:32 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/10 14:48:22 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:41:36 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,6 @@
 #include <pthread.h>
 
 #include "philo.h"
-
-/**
- * @brief Initializes the fork pointers with the right philo's forks
- * 
- * In order to avoid data races, odd philos will take the forks in an order
- * and the even philos will take them in the other order
- * @param philo The philo whose forks have to be selected
- * @param first_fork The pointer to the first fork to select
- * @param second_fork The pointer to the second fork to select
- */
-static void	philo_routine_forks_init(
-	t_philo *philo, t_fork **first_fork, t_fork **second_fork
-)
-{
-	if (philo->idx % 2 == 0)
-	{
-		*first_fork = philo->right_fork;
-		*second_fork = philo->left_fork;
-	}
-	else
-	{
-		*first_fork = philo->left_fork;
-		*second_fork = philo->right_fork;
-	}
-}
 
 /**
  * @brief Makes the given philo take both its forks
@@ -52,26 +27,22 @@ static void	philo_routine_forks_init(
  */
 bool	philo_routine_forks(t_philo *philo)
 {
-	t_fork	*first_fork;
-	t_fork	*second_fork;
-
 	if (philo == NULL)
 		return (false);
-	philo_routine_forks_init(philo, &first_fork, &second_fork);
-	if (!t_fork_take(first_fork))
+	if (!t_fork_take(philo->first_fork))
 		return (false);
 	if (
 		!pprint(philo->mutex_print, philo, ACT_FORK)
-		|| !t_fork_take(second_fork)
+		|| !t_fork_take(philo->second_fork)
 	)
 	{
-		t_fork_put_down(first_fork);
+		t_fork_put_down(philo->first_fork);
 		return (false);
 	}
 	if (!pprint(philo->mutex_print, philo, ACT_FORK))
 	{
-		t_fork_put_down(first_fork);
-		t_fork_put_down(second_fork);
+		t_fork_put_down(philo->first_fork);
+		t_fork_put_down(philo->second_fork);
 		return (false);
 	}
 	return (true);
@@ -117,16 +88,16 @@ bool	philo_routine_eat(t_philo *philo)
 
 	if (philo == NULL || !pprint(philo->mutex_print, philo, ACT_EAT))
 	{
-		t_fork_put_down(philo->left_fork);
-		t_fork_put_down(philo->right_fork);
+		t_fork_put_down(philo->first_fork);
+		t_fork_put_down(philo->second_fork);
 		return (false);
 	}
 	ret = true;
 	if (!philo_set_last_meal_start(philo))
 		ret = false;
 	ret = ft_msleep(philo->time_to_eat) && ret;
-	ret = t_fork_put_down(philo->left_fork) && ret;
-	ret = t_fork_put_down(philo->right_fork) && ret;
+	ret = t_fork_put_down(philo->first_fork) && ret;
+	ret = t_fork_put_down(philo->second_fork) && ret;
 	philo->nb_meals += 1;
 	return (ret);
 }

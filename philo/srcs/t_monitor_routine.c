@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_monitor_routine.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codekiwi <codekiwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:55:00 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/17 13:21:07 by codekiwi         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:15:16 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static bool	t_monitor_routine_loop(t_monitor *monitor)
 			ts_curr = get_ts();
 			if (errno != 0 || ts_meal == -1 || ts_curr == -1)
 				return (false);
-			if (ts_meal != 0 && ts_curr - ts_meal >= monitor->time_to_die)
+			if (ts_meal != 0 && ts_curr - ts_meal > monitor->time_to_die)
 				return (t_monitor_routine_loop_death(philo));
 			i++;
 		}

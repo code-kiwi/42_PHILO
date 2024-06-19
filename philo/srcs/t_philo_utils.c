@@ -6,7 +6,7 @@
 /*   By: mhotting <mhotting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:19:40 by mhotting          #+#    #+#             */
-/*   Updated: 2024/06/19 17:58:19 by mhotting         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:13:12 by mhotting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include <string.h>
 
 #include "philo.h"
+
+static void	t_philo_swap_forks(t_philo *philo)
+{
+	t_fork	*temp;
+
+	temp = philo->first_fork;
+	philo->first_fork = philo->second_fork;
+	philo->second_fork = temp;
+}
 
 /**
  * @brief Initializes the given philo
@@ -36,9 +45,11 @@ bool	t_philo_init(t_philo *philo, t_philo_data *data, size_t index)
 	philo->mutex_start = &data->mutex_start;
 	philo->mutex_stop = &data->mutex_stop;
 	philo->mutex_meal_start = &data->mutex_meal_time;
-	philo->left_fork = &data->forks[index];
+	philo->first_fork = &data->forks[index];
 	if (data->nb_philos != 1)
-		philo->right_fork = &data->forks[(index + 1) % data->nb_philos];
+		philo->second_fork = &data->forks[(index + 1) % data->nb_philos];
+	if (philo->idx % 2 == 0)
+		t_philo_swap_forks(philo);
 	philo->ts_initial = &data->ts_initial;
 	philo->nb_philos = data->nb_philos;
 	philo->nb_philos_launched = &data->nb_philos_launched;
