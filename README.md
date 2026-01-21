@@ -1,26 +1,26 @@
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-# PHILOSOPHERS
 
-> **Note:** This is a project from **42 learning cursus**.
+# Philosophers
 
-## Description
-> Work in progress
+This project was developed as part of the École 42 curriculum.
 
-## Pinciples
-> Work in progress 
+## Objective
+The goal of this project is to explore multithreading and synchronization by solving
+the classic Dining Philosophers problem.
 
-## Setup instructions
-> Work in progress
+## Key concepts
+- Thread creation and management
+- Mutexes and synchronization
+- Shared resource access
+- Race conditions and deadlock prevention
+- Timing constraints and concurrency control
 
-## How to use the progam ?
-> Work in progress
+## Technical stack
+- C
+- POSIX threads (pthreads)
+- Linux
 
-## Testing
-> Work in progress
-
-## Grade
-> Work in progress
-
-## Credits
-> Work in progress
+## Notes
+This repository contains the mandatory part of the project only.
+The focus is on correctness, synchronization, and proper thread management.
